@@ -13,7 +13,7 @@ const user = require("./routes/user.js")
 app.use(cors({origin: true, credentials: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(morgan('dev'))
+app.use(morgan('prod'))
 
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
 .then(() => console.log("Connected to DB"))
