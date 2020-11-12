@@ -45,7 +45,7 @@ router.post('/login', (req, res) => {
 })
 
 // register
-router.post('/user', (req, res) => {
+router.post('/register', (req, res) => {
 	const {name, email, password} = req.body;
   // check if all inputs are filled
   if (name === "" || email === "" || password === "") {
