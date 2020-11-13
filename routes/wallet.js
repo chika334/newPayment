@@ -5,7 +5,7 @@ const auth = require('../middleware/auth')
 
 router.get('/getWallet', auth, async (req, res) => {
     const wallet = await Wallet.findById(req.user._id)
-    console.log(wallet)
+    res.json(wallet)
 })
 
 module.exports = router;
