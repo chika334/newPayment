@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt")
 const Wallet = require('../model/Wallet')
 
 router.get('/getUser', auth, async (req, res) => {
-	const user = await User.findById(req.user._id).select('-Hashed_password -salt')
+	const user = await User.findById(req.user._id).select('-password')
 	res.json(user)
 })
 
