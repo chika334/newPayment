@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const auth = require("../middleware/auth.js")
 const bcrypt = require("bcrypt")
+const Wallet = require('../model/Wallet')
 
 router.get('/getUser', auth, async (req, res) => {
 	const user = await User.findById(req.user._id).select('-Hashed_password -salt')
