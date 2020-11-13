@@ -2,6 +2,7 @@ const User = require('../model/User.js')
 const express = require('express')
 const router = express.Router()
 const auth = require("../middleware/auth.js")
+const bcrypt = require("bcrypt")
 
 router.get('/getUser', auth, async (req, res) => {
 	const user = await User.findById(req.user._id).select('-Hashed_password -salt')
@@ -9,7 +10,7 @@ router.get('/getUser', auth, async (req, res) => {
 })
 
 // login
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   // get request body
   const {email, password} = req.body;
   // check if all inputs are filled 
@@ -19,33 +20,18 @@ router.post('/login', (req, res) => {
     })
   }
 
-  // check if email exists
-  User.findOne({email}).exec((err, user) => {
-    if(err || !user) {
-      return res.status(400).json({
-        msg: "User with that email does not exist"
-      })
-    }
+  let user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(400).json({ msg: 'Invalid Email or Password.' });
 
-    // checks if email and password are correct
-    if(!user.authenticate(password)) {
-      return res.status(400).json({
-        msg: "Email and password do not match"
-      })
-    }
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword) return res.status(400).json({ msg: 'Invalid Email or Password.' });
 
-    // generate token
-    const token = user.generateAuthToken()
-    const {name, email, role} = user
-    res.status(200).json({
-      user: {email, name, role},
-      token
-    })
-  })
+  const token = user.generateAuthToken();
+  res.send({ user, token })
 })
 
 // register
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
 	const {name, email, password} = req.body;
   // check if all inputs are filled
   if (name === "" || email === "" || password === "") {
@@ -53,25 +39,25 @@ router.post('/register', (req, res) => {
       msg: "Input all fields"
     })
   }
-  // check if email already exists
-  User.findOne({email}).exec((err, user) => {
-    if (user) {
-      return res.status(400).json({
-        msg: "Email address is taken"
-      })
-    }
+  // verifies if user already exit
+  let user = await User.findOne({ email: req.body.email })
+  if (user) return res.status(400).json({ msg: 'User already registered' })
 
-    // register new user
-    user = new User ({name, email, password})
-    user.save();
-    const {role} = user;
-    const token = user.generateAuthToken();
-    return res.status(200).json({
-      msg: "Signup Successful",
-      user: {name, email, role},
-      token,
-    })
-  })
+  // gets new users info
+  user = new User({
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  const salt = await bcrypt.genSalt(10);
+  user.password = await bcrypt.hash(user.password, salt)
+
+  // saves the details to the database
+  await user.save();
+
+  const token = user.generateAuthToken();
+  res.header('x-auth-token', token).send({ user, token });
 })
 
 router.post('/updatePassword', async(req, res) => {
