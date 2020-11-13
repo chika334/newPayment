@@ -7,3 +7,5 @@ router.get('/getWallet', auth, (req, res) => {
     const wallet = Wallet.findById(req.user._id)
     console.log(wallet)
 })
+
+module.exports = router;
