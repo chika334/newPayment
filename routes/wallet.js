@@ -4,13 +4,24 @@ const router = express.Router()
 const auth = require('../middleware/auth')
 
 router.get('/getWallet', auth, async (req, res) => {
-    const wallet = await Wallet.findById(req.user._id)
+    const wallet = await Wallet.findById(req.user.walletId)
     res.json(wallet)
 })
 
-router.post('/addFunds', (req, res) => {
-    const { valueamount } = req.body
-    console.log(req.body.AmountInt)
+router.post('/addFunds', auth, async (req, res) => {
+    const { AmountInt } = req.body
+    if (AmountInt == null) {
+        res.status(404).json({
+            msg: 'Input an amount'
+        })
+        return
+    }
+
+    let wallet = await Wallet.findById(req.user.walletId)
+    console.log(wallet)
+    //wallet = new Wallet({
+      //  wallet
+    //})
 })
 
 module.exports = router;

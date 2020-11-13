@@ -42,12 +42,15 @@ router.post('/register', async (req, res) => {
   // verifies if user already exit
   let user = await User.findOne({ email: req.body.email })
   if (user) return res.status(400).json({ msg: 'User already registered' })
+  
+  const wallet = await Wallet.create({ amount: 0 });
 
   // gets new users info
   user = new User({
     name: req.body.name,
     email: req.body.email,
     password: req.body.password,
+    walletId: wallet._id,
   });
 
   const salt = await bcrypt.genSalt(10);
