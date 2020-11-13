@@ -74,4 +74,36 @@ router.post('/register', (req, res) => {
   })
 })
 
+router.post('/updatePassword', async(req, res) => {
+    const { _id, email, old_password, new_password, confirm_new_password } = req.body
+    if ( new_password === "" ) {
+        res.status(400).json({
+            msg: "Input all Fields"
+        })
+    }
+    
+    let user = await User.findOne({ email }, (err, user) => {
+        if (user != null) {
+            var hash = user.password
+            bcrypt.compare(old_password, hash, function(err, res) {
+            //if (res) {
+                // Password match
+                if (new_password == confirm_new_password) {
+                    bcrypt.hash(new_password, 10, function(err, hash) {
+                    user.password = hash
+                    user.save()
+                    
+                    })
+                }
+            //}          
+            })
+        }
+        res.status(200).json({
+            msg: email + " your password has been changed."
+        })
+    })
+    if (!user) return res.status(400).json({ msg: 'User not found' })
+    
+})
+
 module.exports = router
