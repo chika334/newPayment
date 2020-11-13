@@ -9,6 +9,7 @@ require("dotenv").config()
 
 // routes
 const user = require("./routes/user.js")
+const wallet = require("./routes/wallet")
 
 // middleware
 app.use(cors({origin: true, credentials: true}));
@@ -24,6 +25,7 @@ mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopolo
 // router middleware
 app.use(express.json());
 app.use('/api', user);
+app.use('/api', wallet);
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
