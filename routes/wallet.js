@@ -10,7 +10,7 @@ router.get('/getWallet', auth, async (req, res) => {
 
 router.post('/addFunds', (req, res) => {
     const { valueamount } = req.body
-    console.log(valueamount)
+    console.log(req)
 })
 
 module.exports = router;
