@@ -4,5 +4,6 @@ const router = express.Router()
 const auth = require('../middleware/auth')
 
 router.get('/getWallet', auth, (req, res) => {
-    console.log("good")
+    const wallet = Wallet.findById(req.user._id)
+    console.log(wallet)
 })
