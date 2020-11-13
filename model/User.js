@@ -16,11 +16,10 @@ const UserSchema = new mongoose.Schema({
 		lowercase: true,
 		require: true
 	},
-	Hashed_password: {
+	password: {
 		require: true,
 		type: String
-	},
-	salt: String,
+	}
 	role: {
 		type: Number,
 		default: 0
