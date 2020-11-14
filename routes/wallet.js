@@ -17,15 +17,17 @@ router.post('/addFunds', auth, async (req, res) => {
         return
     }
 
-    let wallets = await Wallet.findById(req.user.walletId)
+    let wallets = await Wallet.findById({ req.user.walletId }, (err, result) => {
+        console.log(result)
+    })
     // console.log(wallets)
-    if(wallets._id) {
+    //if(wallets._id) {
         //console.log(wallets.wallet + AmountInt)
-        wallets = new Wallet({ wallet: wallets.wallet + AmountInt })
-        wallets.save()
-    } else {
-        console.log("bad")
-    }
+       // wallets = new Wallet({ wallet: wallets.wallet + AmountInt })
+      //  wallets.save()
+   // } else {
+   //     console.log("bad")
+    //}
 })
 
 module.exports = router;
