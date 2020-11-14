@@ -8,6 +8,7 @@ router.get('/getWallet', auth, async (req, res) => {
     res.json(wallet)
 })
 
+// Add payment
 router.post('/addFunds', auth, async (req, res) => {
     const { AmountInt } = req.body
     if (AmountInt == null) {
@@ -24,21 +25,35 @@ router.post('/addFunds', auth, async (req, res) => {
               return res.json({ error: console.log(err)})
             } else {
               res.status(200).json({
-                msg: `Paid`
+                msg: `Account Credited`
               });
             }
-            //console.log(success)
         })
-        //console.log(wallets)
     })
-    // console.log(wallets)
-    //if(wallets._id) {
-        //console.log(wallets.wallet + AmountInt)
-       // wallets = new Wallet({ wallet: wallets.wallet + AmountInt })
-      //  wallets.save()
-   // } else {
-   //     console.log("bad")
-    //}
+})
+
+// deduct payment
+router.post('/addFunds', auth, async (req, res) => {
+    const { AmountInt } = req.body
+    if (AmountInt == null) {
+        res.status(404).json({
+            msg: 'Input an amount'
+        })
+        return
+    }
+
+    await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
+        if (err) throw err;
+        return wallets.updateOne({ wallet: wallets.wallet - AmountInt }, (err, success) => {
+            if (err) {
+              return res.json({ error: console.log(err)})
+            } else {
+              res.status(200).json({
+                msg: `Payment made`
+              });
+            }
+        })
+    })
 })
 
 module.exports = router;
