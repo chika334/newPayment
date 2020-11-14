@@ -17,8 +17,12 @@ router.post('/addFunds', auth, async (req, res) => {
         return
     }
 
-    let wallets = await Wallet.findById({ _id: req.user.walletId }, (err, result) => {
-        console.log(result)
+    await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
+        if (err) throw err;
+        return wallets.updateOne({ wallet: wallets.wallet + AmountInt }, (err, success) => {
+            console.log(success)
+        })
+        //console.log(wallets)
     })
     // console.log(wallets)
     //if(wallets._id) {
