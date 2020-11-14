@@ -15,7 +15,7 @@ router.post('/addFunds', auth, async (req, res) => {
             msg: 'Input an amount'
         })
         return
-    }5faeba5a89ddb30017f15d1d
+    }
 
     let wallets = await Wallet.findById(req.user.walletId)
     wallets = wallets.wallet + AmountInt
