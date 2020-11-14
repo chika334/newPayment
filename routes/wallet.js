@@ -20,7 +20,14 @@ router.post('/addFunds', auth, async (req, res) => {
     await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
         if (err) throw err;
         return wallets.updateOne({ wallet: wallets.wallet + AmountInt }, (err, success) => {
-            console.log(success)
+            if (err) {
+              return res.json({ error: console.log(err)})
+            } else {
+              res.status(200).json({
+                msg: `Paid`
+              });
+            }
+            //console.log(success)
         })
         //console.log(wallets)
     })
