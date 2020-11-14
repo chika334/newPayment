@@ -18,10 +18,9 @@ router.post('/addFunds', auth, async (req, res) => {
     }
 
     let wallet = await Wallet.findById(req.user.walletId)
-    console.log(wallet.wallet)
-    //wallet = new Wallet({
-      //  wallet
-    //})
+    //console.log(wallet.wallet)
+    let sum = wallet.wallet + AmountInt
+    console.log(sum)
 })
 
 module.exports = router;
