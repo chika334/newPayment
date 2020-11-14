@@ -20,7 +20,7 @@ router.post('/addFunds', auth, async (req, res) => {
     let wallets = await Wallet.findById(req.user.walletId)
     // console.log(wallets)
     if(wallets._id) {
-        console.log(wallets.wallet)
+        console.log(wallets.wallet + AmountInt)
     } else {
         console.log("bad")
     }
