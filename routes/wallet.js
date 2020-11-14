@@ -18,7 +18,12 @@ router.post('/addFunds', auth, async (req, res) => {
     }
 
     let wallets = await Wallet.findById(req.user.walletId)
-    console.log(wallets)
+    // console.log(wallets)
+    if(wallets._id) {
+        console.log(wallets.wallet)
+    } else {
+        console.log("bad")
+    }
 })
 
 module.exports = router;
