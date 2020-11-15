@@ -34,6 +34,7 @@ router.post('/addFunds', auth, async (req, res) => {
 
 // deduct payment
 router.post('/deductFunds', auth, async (req, res) => {
+    console.log(req.body)
     //const { AmountInt } = req.body
     //if (AmountInt == null) {
       //  res.status(404).json({
