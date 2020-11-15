@@ -4,7 +4,6 @@ const cors = require("cors");
 const mongoose = require("mongoose")
 const express = require("express");
 const app = express();
-const path = require('path');
 require("dotenv").config()
 
 // routes
@@ -18,9 +17,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('prod'))
 
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
-.then(() => console.log("Connected to DB"))
-.catch(err => console.log(err))
-
+    .then(() => console.log("Connected to DB"))
+    .catch(err => console.log(err))
 
 // router middleware
 app.use(express.json());
