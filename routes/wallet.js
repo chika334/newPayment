@@ -54,6 +54,6 @@ router.post('/deductFunds', auth, async (req, res) => {
       //      }
         //})
 //    })
-//})
+})
 
 module.exports = router;
