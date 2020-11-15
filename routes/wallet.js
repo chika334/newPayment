@@ -34,26 +34,26 @@ router.post('/addFunds', auth, async (req, res) => {
 
 // deduct payment
 router.post('/deductFunds', auth, async (req, res) => {
-    const { AmountInt } = req.body
-    if (AmountInt == null) {
-        res.status(404).json({
-            msg: 'Input an amount'
-        })
-        return
-    }
+    //const { AmountInt } = req.body
+    //if (AmountInt == null) {
+      //  res.status(404).json({
+        //    msg: 'Input an amount'
+//        })
+  //      return
+//    }
 
-    await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
-        if (err) throw err;
-        return wallets.updateOne({ wallet: wallets.wallet - AmountInt }, (err, success) => {
-            if (err) {
-              return res.json({ error: console.log(err)})
-            } else {
-              res.status(200).json({
-                msg: `Payment made`
-              });
-            }
-        })
-    })
-})
+//    await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
+  //      if (err) throw err;
+    //    return wallets.updateOne({ wallet: wallets.wallet - AmountInt }, (err, success) => {
+      //      if (err) {
+        //      return res.json({ error: console.log(err)})
+          //  } else {
+//              res.status(200).json({
+  //              msg: `Payment made`
+    //          });
+      //      }
+        //})
+//    })
+//})
 
 module.exports = router;
