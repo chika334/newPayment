@@ -5,8 +5,8 @@ const auth = require('../middleware/auth')
 
 router.get('/getWallet', auth, async (req, res) => {
     const wallet = await Wallet.findById(req.user.walletId)
-    console.log(wallet)
-    //res.json(wallet)
+    //console.log(wallet)
+    res.json(wallet)
 })
 
 // Add payment
