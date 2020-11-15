@@ -5,7 +5,6 @@ const auth = require('../middleware/auth')
 
 router.get('/getWallet', auth, async (req, res) => {
     const wallet = await Wallet.findById(req.user.walletId)
-    //console.log(wallet)
     res.json(wallet)
 })
 
@@ -34,7 +33,7 @@ router.post('/addFunds', auth, async (req, res) => {
 })
 
 // deduct payment
-router.post('/addFunds', auth, async (req, res) => {
+router.post('/deductFunds', auth, async (req, res) => {
     const { AmountInt } = req.body
     if (AmountInt == null) {
         res.status(404).json({
