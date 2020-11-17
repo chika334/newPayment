@@ -48,7 +48,7 @@ router.post('/deductFunds', auth, async (req, res) => {
         if(wallets.wallet <= 0) {
             return res.status(400).json({
                 msg: "Can't complete transaction wallet balance low"
-            })
+            });
         } 
         return wallets.updateOne({ wallet: wallets.wallet - AmountInt }, (err, success) => {
             if (err) {
