@@ -13,8 +13,7 @@ router.post('/creditTransaction', (req, res) => {
     
     const config = {
         headers: {
-          Authorization: Basic
-          
+          Authorization: Basic base64
         }
       }
 
@@ -27,7 +26,7 @@ router.post('/creditTransaction', (req, res) => {
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
-            
+            console.log(res.data)
         })
         .catch(err => console.log(err))
 })
