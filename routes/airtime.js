@@ -6,7 +6,7 @@ const axios = require('axios')
 const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
 
-router.post('/creditTransaction', (req, res) => {
+router.post('/creditTransaction', auth, (req, res) => {
     const { AmountInt, service, phone } = req.body
     const requestId = uuidv4();
 
@@ -32,7 +32,7 @@ router.post('/creditTransaction', (req, res) => {
                 amount: res.data.amount,
                 requestId: res.data.requestId
             })
-            //console.log(transac)
+
             pay.save();
             res.status(200).json({
                 msg: 'success'
