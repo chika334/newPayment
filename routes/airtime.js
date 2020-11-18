@@ -4,9 +4,11 @@ const router = express.Router()
 const auth = require('../middleware/auth')
 const axios = require('axios')
 const Transaction = require('../model/Transaction')
+const { v4: uuidv4 } = require('uuid');
 
 router.post('/creditTransaction', (req, res) => {
-    const { AmountInt, uuidvar, service, phone } = req.body
+    const { AmountInt, service, phone } = req.body
+    const requestId = uuidv4();
 
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
@@ -18,7 +20,7 @@ router.post('/creditTransaction', (req, res) => {
       }
 
     const body = {
-        request_id: uuidvar,
+        request_id: requestId,
         serviceID: service,
         amount: AmountInt,
         phone: phone
@@ -37,8 +39,8 @@ router.post('/creditTransaction', (req, res) => {
                 status: res.data.status,
             })
             
-            console.log(transac)
-            console.log(res.data)
+            //console.log(transac)
+            console.log(res)
         })
         .catch(err => console.log(err))
 })
