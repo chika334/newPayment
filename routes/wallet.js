@@ -3,10 +3,6 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
 
-router.get('/getWallet', auth, async (req, res) => {
-    const wallet = await Wallet.findById(req.user.walletId)
-    res.json(wallet)
-})
 
 // Add payment
 router.post('/addFunds', auth, async (req, res) => {
