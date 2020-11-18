@@ -3,6 +3,7 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const axios = require('axios')
+const Transaction = require('../model/Transaction')
 
 router.post('/creditTransaction', (req, res) => {
     const { AmountInt, uuidvar, service, phone } = req.body
@@ -25,6 +26,18 @@ router.post('/creditTransaction', (req, res) => {
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
+            let transac = new Transaction({
+                product_name: res.data.product_name
+                transactionId: res.data.transactionId
+                amount: res.data.amount
+                total_amount: res.data.total_amount
+                requestId: res.data.requestId
+                date: res.data.date
+                amount: res.data.amount
+                status: res.data.status
+            })
+            
+            console.log(transac)
             console.log(res.data)
         })
         .catch(err => console.log(err))
