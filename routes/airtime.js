@@ -3,7 +3,7 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const axios = require('axios')
-const Transaction = require('../model/Transaction')
+const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
 
 router.post('/creditTransaction', (req, res) => {
@@ -28,11 +28,15 @@ router.post('/creditTransaction', (req, res) => {
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
-            res.data.content.transactions.map(good => 
-                console.log(good)   
-            )
+            const pay = new Pay({
+                amount: res.data.amount,
+                requestId: res.data.requestId
+            })
             //console.log(transac)
-            console.log(res)
+            pay.save();
+            res.status(200).json({
+                msg: 'success'
+            })
         })
         .catch(err => console.log(err))
 })
