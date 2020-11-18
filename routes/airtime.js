@@ -17,10 +17,10 @@ router.post('/creditTransaction', (req, res) => {
       }
 
     const body = {
-        "request_id": uuidvar,
-        "serviceID": service,
-        "amount": AmountInt,
-        "phone": phone
+        request_id: uuidvar,
+        serviceID: service,
+        amount: AmountInt,
+        phone: phone
     }
 
     axios.post(`${process.env.airtime}`, body, config)

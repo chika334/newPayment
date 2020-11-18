@@ -34,7 +34,6 @@ router.post('/addFunds', auth, async (req, res) => {
 
 // deduct payment
 router.post('/deductFunds', auth, async (req, res) => {
-    //console.log(req.body)
     const { AmountInt } = req.body
 
     await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
