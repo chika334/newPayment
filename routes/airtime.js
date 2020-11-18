@@ -13,7 +13,7 @@ router.post('/creditTransaction', (req, res) => {
     
     const config = {
         headers: {
-          Authorization: Basic base64
+          'Authorization': Basic base64
         }
       }
 
