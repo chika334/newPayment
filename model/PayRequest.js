@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const PaySchema = new mongoose.Schema({
-    amount: String
+    amount: String,
     requestId: String
 }, { timestamp: true })
 
