@@ -15,9 +15,9 @@ router.post('/creditTransaction', (req, res) => {
       }
 
     const body = {
-        request_id: uuidvar
-        serviceID: service
-        amount: AmountInt
+        request_id: uuidvar,
+        serviceID: service,
+        amount: AmountInt,
         phone: phone
     }
     
