@@ -7,7 +7,7 @@ const axios = require('axios')
 router.post('/creditTransaction', (req, res) => {
     const { AmountInt, uuidvar, service, phone } = req.body
     
-    const user = `${process.env.email_login}`:`${process.env.password_login}`
+    const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = btoa(user)
     console.log(base64)
     
