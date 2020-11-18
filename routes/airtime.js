@@ -9,7 +9,7 @@ router.post('/creditTransaction', (req, res) => {
     
     const config = {
         headers: {
-          `${process.env.email_login}`:`${process.env.password_login}`
+          process.env.email_login:process.env.password_login
         }
       }
 
