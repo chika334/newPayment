@@ -6,14 +6,13 @@ const axios = require('axios')
 
 router.post('/creditTransaction', (req, res) => {
     const { AmountInt, uuidvar, service, phone } = req.body
-    
+
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
-    console.log(base64)
     
     const config = {
         headers: {
-          "Authorization": `Basic ${base64}`
+          "Authorization": `Basic ${user}`
         }
       }
 
@@ -28,7 +27,7 @@ router.post('/creditTransaction', (req, res) => {
         .then(res => {
             console.log(res.data)
         })
-        .catch(err => console.log(err.message))
+        .catch(err => console.log(err))
 })
 
 module.exports = router;
