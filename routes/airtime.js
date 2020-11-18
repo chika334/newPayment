@@ -28,17 +28,9 @@ router.post('/creditTransaction', (req, res) => {
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
-            let transac = new Transaction({
-                product_name: res.data.product_name,
-                transactionId: res.data.transactionId,
-                amount: res.data.amount,
-                total_amount: res.data.total_amount,
-                requestId: res.data.requestId,
-                date: res.data.date,
-                amount: res.data.amount,
-                status: res.data.status,
-            })
-            
+            res.data.transaction.map(good => 
+                console.log(good)   
+            )
             //console.log(transac)
             console.log(res)
         })
