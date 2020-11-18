@@ -9,7 +9,7 @@ router.post('/creditTransaction', (req, res) => {
 
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
-    
+
     const config = {
         headers: {
           "Authorization": `Basic ${base64}`
@@ -17,10 +17,10 @@ router.post('/creditTransaction', (req, res) => {
       }
 
     const body = {
-        request_id: uuidvar,
-        serviceID: service,
-        amount: AmountInt,
-        phone: phone
+        "request_id": uuidvar,
+        "serviceID": service,
+        "amount": AmountInt,
+        "phone": phone
     }
 
     axios.post(`${process.env.airtime}`, body, config)
