@@ -7,9 +7,14 @@ const axios = require('axios')
 router.post('/creditTransaction', (req, res) => {
     const { AmountInt, uuidvar, service, phone } = req.body
     
+    const user = `${process.env.email_login}`:`${process.env.password_login}`
+    const base64 = btoa(user)
+    console.log(base64)
+    
     const config = {
         headers: {
-          process.env.email_login:process.env.password_login
+          Authorization: Basic
+          
         }
       }
 
@@ -22,7 +27,7 @@ router.post('/creditTransaction', (req, res) => {
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
-            console.log(res.data)
+            
         })
         .catch(err => console.log(err))
 })
