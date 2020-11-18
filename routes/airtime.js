@@ -38,11 +38,12 @@ router.post('/creditTransaction', (req, res) => {
             })
 
             pay.save();
-            res.status(200).json({
-                msg: 'success'
-            })
         })
         .catch(err => console.log(err))
+        
+   res.status(200).json({
+       msg: 'success'
+   })
 })
 
 module.exports = router;
