@@ -39,7 +39,7 @@ router.post('/deductFunds', auth, async (req, res) => {
 
     await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
         //if (err) throw err;
-        if(wallets.wallet <= 0) {
+        if(wallets.wallet < AmountInt) {
             return res.status(400).json({
                 msg: "Can't complete transaction wallet balance low"
             });
