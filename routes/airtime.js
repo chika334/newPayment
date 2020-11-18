@@ -8,7 +8,7 @@ router.post('/creditTransaction', (req, res) => {
     const { AmountInt, uuidvar, service, phone } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
-    const base64 = btoa(user)
+    const base64 = Buffer.from(user).toString('base64'));
     console.log(base64)
     
     const config = {
