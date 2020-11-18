@@ -6,7 +6,7 @@ const axios = require('axios')
 const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
 
-router.post('/creditTransaction', auth, (req, res) => {
+router.post('/creditTransaction', (req, res) => {
     const { AmountInt, service, phone } = req.body
     const requestId = uuidv4();
 
@@ -30,7 +30,11 @@ router.post('/creditTransaction', auth, (req, res) => {
         .then(res => {
             const pay = new Pay({
                 amount: res.data.amount,
-                requestId: res.data.requestId
+                requestId: res.data.requestId,
+                product_name: res.data.content.transactions.product_name,
+                date: res.data.transaction_date.date,
+                total_amount: res.data.content.transactions.total_amount,
+                transactionId: res.data.content.transactions.transactionId
             })
 
             pay.save();
