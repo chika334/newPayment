@@ -28,7 +28,7 @@ router.post('/creditTransaction', (req, res) => {
         .then(res => {
             console.log(res.data)
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err.message))
 })
 
 module.exports = router;
