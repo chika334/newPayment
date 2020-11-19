@@ -13,7 +13,7 @@ router.get('/getPayment', auth, async (req, res) => {
     res.json(pay)
 })
 
-router.post('/creditTransaction', async (req, res) => {
+router.post('/creditTransaction', auth, async (req, res) => {
     const { AmountInt, service, phone } = req.body
     const requestId = uuidv4();
 
