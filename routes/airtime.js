@@ -8,9 +8,9 @@ const { v4: uuidv4 } = require('uuid');
 
 
 router.get('/getPayment', auth, async (req, res) => {
-    const pay = await Pay.findById(req.user._id)
-    console.log(req.user)
-    //res.json(pay)
+    const pay = await Pay.findById(req.user.walletId:)
+    //console.log(req.user)
+    res.json(pay)
 })
 
 router.post('/creditTransaction', (req, res) => {
