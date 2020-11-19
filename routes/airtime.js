@@ -36,17 +36,17 @@ router.post('/creditTransaction', auth, async (req, res) => {
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
-            const pay = new Pay({
-                amount: res.data.amount,
-                requestId: res.data.requestId,
-                product_name: name,
-                date: res.data.transaction_date.date,
-                total_amount: res.data.content.transactions.total_amount,
-                transactionId: res.data.content.transactions.transactionId,
-                walletId: userId._id,
-            })
+            //const pay = new Pay({
+              //  amount: res.data.amount,
+                //requestId: res.data.requestId,
+  //              product_name: name,
+    //            date: res.data.transaction_date.date,
+      //          total_amount: res.data.content.transactions.total_amount,
+        //        transactionId: res.data.content.transactions.transactionId,
+          //      walletId: userId._id,
+            //})
 
-            pay.save();
+            //pay.save();
             console.log(res.data)
         })
         .catch(err => console.log(err))
