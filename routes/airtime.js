@@ -42,6 +42,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
                 date: res.data.transaction_date.date,
                 total_amount: res.data.content.transactions.total_amount,
                 transactionId: res.data.content.transactions.transactionId,
+                status: res.data.response_description,
                 walletId: userId._id,
             })
 

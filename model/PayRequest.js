@@ -7,7 +7,8 @@ const PaySchema = new mongoose.Schema({
     product_name: String,
     date: String,
     total_amount: String,
-    transactionId: String
+    transactionId: String,
+    status: String,
 }, { timestamp: true })
 
 module.exports = mongoose.model('Pay', PaySchema)
