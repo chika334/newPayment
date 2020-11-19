@@ -78,9 +78,9 @@ router.post('/Transaction', auth, async (req, res) => {
     axios.post(`${process.env.specificTrans}`, body, config)
         .then(res => {
             const trans = new Transaction({
-                amount: res.data.amount,
+                amount: res.data.content.transactions.amount,
                 requestId: req.body.trans,
-                product_name: res.data.content.transactions.product_name,
+                product_name: res.data.content.transactions.type,
                 date: res.data.transaction_date.date,
                 total_amount: res.data.content.transactions.total_amount,
                 transactionId: res.data.content.transactions.transactionId,
