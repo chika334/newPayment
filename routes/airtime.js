@@ -6,6 +6,12 @@ const axios = require('axios')
 const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
 
+
+router.get('/getPayment', auth, async (req, res) => {
+    const pay = await Pay.findById(req.user._id)
+    res.json(pay)
+})
+
 router.post('/creditTransaction', (req, res) => {
     const { AmountInt, service, phone } = req.body
     const requestId = uuidv4();
