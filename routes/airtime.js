@@ -33,12 +33,12 @@ router.post('/creditTransaction', auth, async (req, res) => {
         phone: phone
     }
     
-    const userId = await User.findById(req.user._id)
-    console.log(userId)
+    const userId = await User.findById(req.user.walletId)
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
             const pay = new Pay({
+                walletId: userId.walletId,
                 amount: res.data.amount,
                 requestId: res.data.requestId,
                 product_name: res.data.content.transactions.product_name,
