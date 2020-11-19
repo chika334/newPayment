@@ -58,9 +58,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 })
 
 router.post('/Transaction', auth, async (req, res) => {
-    const { AmountInt, service, phone, name } = req.body
-    const requestId = uuidv4();
-    console.log(req.body)
+    const { trans } = req.body
 
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
@@ -72,12 +70,28 @@ router.post('/Transaction', auth, async (req, res) => {
       }
 
     const body = {
-        request_id: requestId,
+        request_id: trans,
     }
     
     const userId = await Wallet.findById(req.user.walletId)
 
-    
+    axios.post(`${process.env.specificTrans}`, body, config)
+        .then(res => {
+            const trans = new Transaction({
+                amount: res.data.amount,
+                requestId: req.body.trans,
+                product_name: res.data.content.transactions.product_name,
+                date: res.data.transaction_date.date,
+                total_amount: res.data.content.transactions.total_amount,
+                transactionId: res.data.content.transactions.transactionId,
+                status: res.data.response_description,
+                walletId: userId._id,
+            })
+
+            trans.save();
+            console.log(res.data)
+        })
+        .catch(err => console.log(err))
         
    res.status(200).json({
        msg: 'success'
