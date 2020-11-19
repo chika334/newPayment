@@ -12,6 +12,11 @@ router.get('/getPayment', auth, async (req, res) => {
     res.status(200).json(credit)
 })
 
+router.get('/getPayment', auth, async (req, res) => {
+    const trans = await Transaction.find({ walletId: req.user.walletId })
+    res.status(200).json(trans)
+})
+
 router.post('/creditTransaction', auth, async (req, res) => {
     const { AmountInt, service, phone, name } = req.body
     const requestId = uuidv4();
