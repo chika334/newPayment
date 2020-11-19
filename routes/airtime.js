@@ -5,7 +5,6 @@ const auth = require('../middleware/auth')
 const axios = require('axios')
 const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
-const User = require("../model/User")
 
 router.get('/getPayment', auth, async (req, res) => {
     const pay = await Pay.findById(req.user.walletId)
@@ -33,13 +32,13 @@ router.post('/creditTransaction', auth, async (req, res) => {
         phone: phone
     }
     
-    const userId = await User.findById(req.user.walletId)
+    const userId = await Wallet.findById(req.user.walletId)
     console.log(userId)
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(res => {
             const pay = new Pay({
-                walletId: userId.walletId,
+                walletId: userId._id,
                 amount: res.data.amount,
                 requestId: res.data.requestId,
                 product_name: res.data.content.transactions.product_name,
