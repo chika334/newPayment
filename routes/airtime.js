@@ -46,6 +46,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
             })
 
             pay.save();
+            console.log(res.data)
         })
         .catch(err => console.log(err))
         
