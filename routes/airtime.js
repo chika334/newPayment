@@ -33,7 +33,7 @@ router.post('/creditTransaction', async (req, res) => {
         phone: phone
     }
     
-    const userId = await User.findById(req.user._id)
+    const userId = await User.findById(_id)
     console.log(userId)
 
     axios.post(`${process.env.airtime}`, body, config)
