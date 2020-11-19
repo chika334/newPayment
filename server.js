@@ -10,6 +10,7 @@ require("dotenv").config()
 const user = require("./routes/user.js")
 const wallet = require("./routes/wallet")
 const airtime = require("./routes/airtime")
+const electric = require('./routes/Electric')
 
 // middleware
 app.use(cors({origin: true, credentials: true}));
@@ -26,6 +27,7 @@ app.use(express.json());
 app.use('/api', user);
 app.use('/api', wallet);
 app.use('/api', airtime);
+app.use('/api', electric)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
