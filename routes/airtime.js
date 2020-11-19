@@ -13,7 +13,7 @@ router.get('/getPayment', auth, async (req, res) => {
 })
 
 router.post('/creditTransaction', auth, async (req, res) => {
-    const { AmountInt, service, phone } = req.body
+    const { AmountInt, service, phone, name } = req.body
     const requestId = uuidv4();
 
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -39,7 +39,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
             const pay = new Pay({
                 amount: res.data.amount,
                 requestId: res.data.requestId,
-                product_name: res.data.content.transactions.product_name,
+                product_name: name,
                 date: res.data.transaction_date.date,
                 total_amount: res.data.content.transactions.total_amount,
                 transactionId: res.data.content.transactions.transactionId,
