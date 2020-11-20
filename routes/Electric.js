@@ -8,7 +8,6 @@ const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 
 router.post('/verifyNumber', auth, async (req, res) => {
-    console.log(req.body)
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
