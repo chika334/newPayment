@@ -30,7 +30,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
         .then(res => {
             console.log(res.data)
         })
-        .catch(err => console.log(err))
+        .catch(err => err.error)
 })
 
 router.post('/Transaction', auth, async (req, res) => {
