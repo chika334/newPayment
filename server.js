@@ -11,6 +11,7 @@ const user = require("./routes/user.js")
 const wallet = require("./routes/wallet")
 const airtime = require("./routes/airtime")
 const electric = require('./routes/Electric')
+const insurance = require('./routes/insurance')
 
 // middleware
 app.use(cors({origin: true, credentials: true}));
@@ -28,6 +29,7 @@ app.use('/api', user);
 app.use('/api', wallet);
 app.use('/api', airtime);
 app.use('/api', electric)
+app.use('/api', insurance);
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {

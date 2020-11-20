@@ -29,9 +29,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
         .then(res => {
             console.log(res.data)
         })
-        .catch(err => res.status(400).json({
-            msg: `Incorrect meter number. Please try with a correct one`
-        }))
+        .catch(err => console.log(err))
 })
 
 router.post('/Transaction', auth, async (req, res) => {
