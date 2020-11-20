@@ -32,7 +32,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
         })
         .catch(err => res.status(400).json({
             msg: `Incorrect meter number. Please try with a correct one`
-        })
+        }))
 })
 
 router.post('/Transaction', auth, async (req, res) => {
