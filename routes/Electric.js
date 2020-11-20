@@ -9,6 +9,28 @@ const Transaction = require("../model/Transaction")
 
 router.post('/verifyNumber', auth, async (req, res) => {
     console.log(req.body)
+    const { meter, service, select } = req.body
+    
+    const user = `${process.env.email_login}:${process.env.password_login}`
+    const base64 = Buffer.from(user).toString('base64');
+    
+    config = {
+        headers: {
+            'Authorization': `Basic ${base64}`
+        }
+    }
+    
+    const body = {
+        billersCode: meter,
+        serviceID: service,
+        type: select
+    }
+    
+    axios.post(`${process.env.verifyMeterNumber}`, body, config)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => console.log(err))
 })
 
 router.post('/Transaction', auth, async (req, res) => {
