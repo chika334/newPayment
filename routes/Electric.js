@@ -8,36 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 
 router.post('/verifyNumber', auth, async (req, res) => {
-    const { AmountInt, service, phone, name } = req.body
-    const requestId = uuidv4();
-
-    const user = `${process.env.email_login}:${process.env.password_login}`
-    const base64 = Buffer.from(user).toString('base64');
-
-    const config = {
-        headers: {
-          "Authorization": `Basic ${base64}`
-        }
-      }
-
-    const body = {
-        request_id: requestId,
-        serviceID: service,
-        amount: AmountInt,
-        phone: phone
-    }
-    
-    const userId = await Wallet.findById(req.user.walletId)
-
-    axios.post(`${process.env.verifyMeterNumber}`, body, config)
-        .then(res => {
-            console.log(res)
-        })
-        .catch(err => console.log(err))
-        
-   res.status(200).json({
-       msg: 'Number Correct'
-   })
+    console.log(req.body)
 })
 
 router.post('/Transaction', auth, async (req, res) => {
