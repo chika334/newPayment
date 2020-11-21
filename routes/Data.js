@@ -52,3 +52,4 @@ router.post('/DataTransaction', auth, async (req, res) => {
    })
 })
 
+module.exports = router;
