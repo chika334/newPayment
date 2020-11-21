@@ -81,28 +81,11 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
         amount: AmountInt,
         phone: phone
     }
-    
+
     const userId = await Wallet.findById(req.user.walletId)
 
     axios.post(`${process.env.prepaidMeterPayment}`, body, config)
-        .then(async (res) => {
-            await Electric.findById({ _id: req.user.walletId }, (err, electrics) => {
-                if (err) throw err;
-            //if(wallets.wallet < AmountInt) {
-              //  return res.status(400).json({
-                //    msg: "Can't complete transaction wallet balance low"
-                //});
-            //} 
-
-            return electrics.updateOne({ Customer_Name: res.data.content.Customer_Name, Meter_Number: meter, Address: res.data.content.Address, walletId: userId._id, type: res.data.content.type, date: res.data.transaction_date.date, response_description: res.data.response_description, amount: AmountInt, product_name: res.data.content.product_name }, (err, success) => {
-                if (err) {
-                  return res.json({ error: console.log(err)})
-                } else {
-                  res.status(200).json({
-                    msg: `Payment made`
-                  });
-                }
-            })
+        .then(res => {
             console.log(res.data)
         })
         .catch(err => console.log(err))
