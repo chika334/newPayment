@@ -81,19 +81,31 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
         amount: AmountInt,
         phone: phone
     }
-
+    
     const userId = await Wallet.findById(req.user.walletId)
 
     axios.post(`${process.env.prepaidMeterPayment}`, body, config)
         .then(res => {
+            const electric = new Electric({
+                Customer_Name: res.data.content.Customer_Name, 
+                Meter_Number: meter, 
+                Address: res.data.content.Address, 
+                walletId: userId._id, 
+                type: res.data.content.type, 
+                date: res.data.transaction_date.date, 
+                response_description: res.data.response_description, 
+                amount: AmountInt, 
+                product_name: res.data.content.product_name 
+            })
             console.log(res.data)
-        })
-        .catch(err => console.log(err))
-        
-       res.status(200).json({
-           msg: 'success'
-       })
+         })   
+         .catch(err => console.log(err))
+         res.status(200).json({
+             msg: 'success'
+         })
     })
-
-
+        
+        
+       
+    
 module.exports = router;
