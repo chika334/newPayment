@@ -33,17 +33,7 @@ router.post('/DataTransaction', auth, async (req, res) => {
 
     axios.post(`${process.env.data_API}`, body, config)
         .then(res => {
-            const data = new Data({
-                amount: res.data.amount,
-                requestId: res.data.requestId,
-                product_name: res.data.content.transactions.product_name,
-                date: res.data.transaction_date.date,
-                total_amount: res.data.content.transactions.total_amount,
-                transactionId: res.data.content.transactions.transactionId,
-                status: res.data.response_description,
-                walletId: userId._id,
-            })
-            data.save();
+            console.log(res.data)
         })
         .catch(err => console.log(err))
         
