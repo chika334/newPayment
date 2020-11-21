@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const Data = require('../model/Data')
 
 router.post('/DataTransaction', auth, async (req, res) => {
-    const { AmountInt, service, phone } = req.body
+    const { AmountInt, service, phone, variation } = req.body
     const requestId = uuidv4();
 
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -24,7 +24,7 @@ router.post('/DataTransaction', auth, async (req, res) => {
         serviceID: service,
         amount: AmountInt,
         billersCode: phone,
-        variation_code,
+        variation_code: variation,
         amount: AmountInt,
         phone: phone
     }
