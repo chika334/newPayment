@@ -107,9 +107,10 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
         })
         .catch(err => console.log(err))
         
-   res.status(200).json({
-       msg: 'success'
-   })
+       res.status(200).json({
+           msg: 'success'
+       })
+    })
 })
 
 module.exports = router;
