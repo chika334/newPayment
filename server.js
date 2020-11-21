@@ -12,7 +12,7 @@ const wallet = require("./routes/wallet")
 const airtime = require("./routes/airtime")
 const electric = require('./routes/Electric')
 const insurance = require('./routes/insurance')
-const data = require('./routes/data')
+const data = require('./routes/Data')
 
 // middleware
 app.use(cors({origin: true, credentials: true}));
