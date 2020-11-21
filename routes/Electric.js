@@ -85,7 +85,7 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
     const userId = await Wallet.findById(req.user.walletId)
 
     axios.post(`${process.env.prepaidMeterPayment}`, body, config)
-        .then(res => {
+        .then(async (res) => {
             await Electric.findById({ _id: req.user.walletId }, (err, electric) => {
                 if (err) throw err;
             //if(wallets.wallet < AmountInt) {
