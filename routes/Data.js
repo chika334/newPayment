@@ -8,8 +8,8 @@ const Data = require('../model/Data')
 const Transaction = require('../model/Transaction')
 
 router.get('/dataTransaction', auth, async (req, res) => {
-    const data = await Data.find({ walletId: req.user.walletId })
-    res.status(200).json(data)
+    const credit = await Data.find({ walletId: req.user.walletId })
+    res.status(200).json(credit)
 })
 
 router.post('/DataTransaction', auth, async (req, res) => {
