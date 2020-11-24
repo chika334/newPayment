@@ -31,17 +31,19 @@ router.post('/verifyNumber', auth, async (req, res) => {
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(res => {
             console.log(res.data)
-            const electric = new Electric({
+            //const electric = new Electric({
+              //  Customer_Name: res.data.content.Customer_Name,
+                //Meter_Number: res.data.content.Meter_Number,
+            //    Address: res.data.content.Address,
+              //  walletId: userId._id
+            //})
+            res.status(200).json({
                 Customer_Name: res.data.content.Customer_Name,
                 Meter_Number: res.data.content.Meter_Number,
                 Address: res.data.content.Address,
-                walletId: userId._id
             })
 
-            electric.save();
-            res.status(200).json({
-               msg: 'success'
-           })
+            //electric.save();
         })
         .catch((error) => {
             if (error.response) {
