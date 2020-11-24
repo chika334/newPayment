@@ -11,7 +11,7 @@ const Electric = require("../model/Electric")
 router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
     
-    const user = `${process.env.email_login}:${process.env.password_login}`
+    const user = `${process.env.email_login}:${process.env.password_logins}`
     const base64 = Buffer.from(user).toString('base64');
     
     config = {
@@ -21,7 +21,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     }
     
     const body = {
-        billersCode: '04173595184',
+        billersCode: meter,
         serviceID: service,
         type: select
     }
