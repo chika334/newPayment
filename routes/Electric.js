@@ -47,7 +47,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
         }))
         .catch(err => console.log(err))
         
-    res.header('x-auth-token')
+    //res.header('x-auth-token')
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
