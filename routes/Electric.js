@@ -45,16 +45,6 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 return error.request
             }
         })
-    
-    if(error) {
-        res.status(400).send({
-            msg: 'Incorrect meter number. Please try with a correct one'
-        })
-    } else {
-        res.status(200).json({
-           msg: 'success'
-       })
-    }
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
