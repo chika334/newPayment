@@ -42,7 +42,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
             })
             verify.save();
         })
-        .then(res.status(200).send({
+        .then(res.header('x-auth-token').status(200).send({
             msg: "success"
         }))
         .catch(err => console.log(err))
