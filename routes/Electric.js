@@ -28,8 +28,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     console.log(body)
     
-    axios.post(`${process.env.verifyMeterNumber}`, body, config)
-        .then(res => {
+    //axios.post(`${process.env.verifyMeterNumber}`, body, config)
+      //  .then(res => {
             //console.log(res.data)
             //const electric = new Electric({
               //  Customer_Name: res.data.content.Customer_Name,
@@ -39,14 +39,14 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             //})
 
            // electric.save();
-        })
-        .catch((error) => {
-            if (error.response) {
-                return error.response
-            } else {
-                return error.request
-            }
-        })
+        //})
+  //      .catch((error) => {
+    //        if (error.response) {
+      //          return error.response
+        //    } else {
+          //      return error.request
+       //     }
+       // })
     
     if(error) {
         res.status(400).send({
