@@ -28,7 +28,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     console.log(body)
     
-    axios.post('https://vtpass.com/api/merchant-verify', body)
+    axios.post('https://vtpass.com/api/merchant-verify', body, config)
       .then(function (response) {
         console.log(response);
       })
