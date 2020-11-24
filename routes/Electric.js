@@ -30,15 +30,15 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(res => {
-            console.log(res.data)
-            //const electric = new Electric({
-              //  Customer_Name: res.data.content.Customer_Name,
-                //Meter_Number: res.data.content.Meter_Number,
-          //      Address: res.data.content.Address,
-            //    walletId: userId._id
-            //})
+            //console.log(res.data)
+            const electric = new Electric({
+                Customer_Name: res.data.content.Customer_Name,
+                Meter_Number: res.data.content.Meter_Number,
+                Address: res.data.content.Address,
+                walletId: userId._id
+            })
 
-            //electric.save();
+            electric.save();
         })
         .catch((error) => {
             if (error.response) {
