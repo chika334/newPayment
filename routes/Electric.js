@@ -21,7 +21,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     }
     
     const body = {
-        billersCode: meter,
+        billersCode: '04173595184',
         serviceID: service,
         type: select
     }
