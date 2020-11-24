@@ -38,9 +38,11 @@ router.post('/verifyNumber', auth, async (req, res) => {
               //  walletId: userId._id
             //})
             res.status(200).json({
-                Customer_Name: res.data.content.Customer_Name,
-                Meter_Number: res.data.content.Meter_Number,
-                Address: res.data.content.Address,
+                electric = {
+                    Customer_Name: res.data.content.Customer_Name,
+                    Meter_Number: res.data.content.Meter_Number,
+                    Address: res.data.content.Address,
+                }
             })
 
             //electric.save();
