@@ -45,9 +45,9 @@ router.post('/verifyNumber', auth, async (req, res) => {
         .then(res.status(200).send({
             msg: "success"
         }))
-        .catch(err => console.log(err))
-        
-    //res.header('x-auth-token')
+        .catch(err => res.status(400).send({
+            msg: "Invalid meter number."
+        }))
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
