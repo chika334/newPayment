@@ -26,6 +26,8 @@ router.post('/verifyNumber', auth, (req, res, error) => {
         type: select
     }
     
+    const userId = await Wallet.findById(req.user.walletId)
+    
     //console.log(body)
     
     /*axios.post('https://vtpass.com/api/merchant-verify', body, config)
@@ -48,7 +50,13 @@ router.post('/verifyNumber', auth, (req, res, error) => {
 
             electric.save();
         })
-        .catch(err => console.log(err))
+        .catch((error) => {
+            if (error.response) {
+                return error.response
+            } else {
+                return error.request
+            }
+        })
         
         
    if(error) {
