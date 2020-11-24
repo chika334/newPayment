@@ -28,23 +28,9 @@ router.post('/verifyNumber', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    axios.post(process.env.verifyMeterNumber, body, config)
+    const verifyNumber = axios.post(process.env.verifyMeterNumber, body, config)
         .then(res => {
-            console.log(res.data)
-            //const electric = new Electric({
-              //  Customer_Name: res.data.content.Customer_Name,
-                //Meter_Number: res.data.content.Meter_Number,
-            //    Address: res.data.content.Address,
-              //  walletId: userId._id
-            //})
-            res.status(200).json({
-                electric: {
-                    Customer_Name: res.data.content.Customer_Name,
-                    Meter_Number: res.data.content.Meter_Number,
-                    Address: res.data.content.Address,
-                }
-            })
-
+            return res;
             //electric.save();
         })
         .catch((error) => {
@@ -56,6 +42,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
                 return error.request
             }
         })
+     console.log(verifyNumber)
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
