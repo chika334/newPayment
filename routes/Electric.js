@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 
-router.post('/verifyNumber', auth, (req, res) => {
+router.post('/verifyNumber', auth, (req, res, error) => {
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -28,15 +28,15 @@ router.post('/verifyNumber', auth, (req, res) => {
     
     //console.log(body)
     
-    axios.post('https://vtpass.com/api/merchant-verify', body, config)
+    /*axios.post('https://vtpass.com/api/merchant-verify', body, config)
       .then(function (response) {
         console.log(response.data);
       })
       .catch(function (error) {
         console.log(error);
-      });
+      });*/
     
- /*   axios.post(process.env.verifyMeterNumber, body, config)
+    axios.post(process.env.verifyMeterNumber, body, config)
         .then(res => {
             console.log(res.data)
             const electric = new Electric({
@@ -48,7 +48,18 @@ router.post('/verifyNumber', auth, (req, res) => {
 
             electric.save();
         })
-        .catch(err => console.log(err)) */
+        .catch(err => console.log(err))
+        
+        
+   if(error) {
+        res.status(400).send({
+            msg: 'Incorrect meter number. Please try with a correct one'
+        })
+    } else {
+        res.status(200).json({
+           msg: 'success'
+       })
+    }
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
