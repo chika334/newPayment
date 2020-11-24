@@ -9,7 +9,7 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
-    const { meter, service, select } = req.body
+    const { meterInt, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
@@ -21,7 +21,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     }
     
     const body = {
-        billersCode: meter,
+        billersCode: meterInt,
         serviceID: service,
         type: select
     }
