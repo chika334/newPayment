@@ -26,6 +26,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         type: select
     }
     
+    console.log(body)
+    
     axios.post(`${process.env.verifyMeterNumber}`, body, config)
         .then(res => {
             console.log(res.data)
