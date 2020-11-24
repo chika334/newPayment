@@ -28,16 +28,6 @@ router.post('/verifyNumber', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    //console.log(body)
-    
-    /*axios.post('https://vtpass.com/api/merchant-verify', body, config)
-      .then(function (response) {
-        console.log(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });*/
-    
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(res => {
             console.log(res.data)
@@ -49,18 +39,19 @@ router.post('/verifyNumber', auth, async (req, res) => {
             })
 
             electric.save();
+            res.status(200).json({
+               msg: 'success'
+           })
         })
         .catch((error) => {
             if (error.response) {
-                return error.response
+                res.status(400).send({
+                    msg: 'Incorrect meter number. Please try with a correct one'
+                })
             } else {
                 return error.request
             }
         })
-        
-    res.status(200).json({
-       msg: 'success'
-   })
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
