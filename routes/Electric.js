@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 
-router.post('/verifyNumber', auth, async (req, res, error) => {
+router.post('/verifyNumber', auth, async (req, res) => {
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -58,16 +58,9 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             }
         })
         
-        
-   if(error) {
-        res.status(400).send({
-            msg: 'Incorrect meter number. Please try with a correct one'
-        })
-    } else {
-        res.status(200).json({
-           msg: 'success'
-       })
-    }
+    res.status(200).json({
+       msg: 'success'
+   })
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
