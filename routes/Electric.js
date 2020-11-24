@@ -28,7 +28,15 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     console.log(body)
     
-    axios.post(process.env.verifyMeterNumber, body, config)
+    axios.post('https://vtpass.com/api/merchant-verify', body)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    
+ /*   axios.post(process.env.verifyMeterNumber, body, config)
         .then(res => {
             console.log(res.data)
             const electric = new Electric({
@@ -40,13 +48,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
 
             electric.save();
         })
-        .catch((error) => {
-            if (error.response) {
-                return error.response
-            } else {
-                return error.request
-            }
-        })
+        .catch(err => console.log(err)) */
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
