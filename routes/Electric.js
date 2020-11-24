@@ -32,17 +32,18 @@ router.post('/verifyNumber', auth, async (req, res) => {
     const userId = await Wallet.findById(req.user.walletId)
     
     axios.post(process.env.verifyMeterNumber, body, config)
-        .then(res => {
-            console.log(res.data)
+        .then(response => {
             const verify = new Verify({
-                Customer_Name: res.data.content.Customer_Name,
-                Meter_Number: res.data.content.Meter_Number,
-                Address: res.data.content.Address,
+                Customer_Name: response.data.content.Customer_Name,
+                Meter_Number: response.data.content.Meter_Number,
+                Address: response.data.content.Address,
                 walletId: userId._id,
                 transactionID: transactionID
             })
-
             verify.save();
+        })
+        .then(res => {
+            console.log(res)
         })
         .catch(err => console.log(err))
         
