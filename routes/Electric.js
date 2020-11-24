@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 
-router.post('/verifyNumber', auth, async (req, res, error) => {
+router.post('/verifyNumber', auth, (req, res) => {
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
