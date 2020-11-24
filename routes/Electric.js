@@ -7,6 +7,7 @@ const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
+const Verify = require("../model/Verify")
 
 router.post('/verifyNumber', auth, async (req, res) => {
     const { meter, service, select } = req.body
@@ -33,7 +34,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(res => {
             console.log(res.data)
-            const electric = new Electric({
+            const verify = new Verify({
                 Customer_Name: res.data.content.Customer_Name,
                 Meter_Number: res.data.content.Meter_Number,
                 Address: res.data.content.Address,
@@ -41,17 +42,9 @@ router.post('/verifyNumber', auth, async (req, res) => {
                 transactionID: transactionID
             })
 
-            electric.save();
+            verify.save();
         })
-        .catch((error) => {
-            if (error.response) {
-                res.status(400).send({
-                    msg: 'Incorrect meter number. Please try with a correct one'
-                })
-            } else {
-                return error.request
-            }
-        })
+        .catch(err => console.log(err))
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {

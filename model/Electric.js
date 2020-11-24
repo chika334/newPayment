@@ -9,7 +9,8 @@ const ElectricSchema = new mongoose.Schema({
     date: String,
     response_description: String,
     amount: String,
-    product_name: String
+    product_name: String,
+    transactionID: String
 }, { timestamp: true })
 
 module.exports = mongoose.model('Electric', ElectricSchema)
