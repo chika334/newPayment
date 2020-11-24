@@ -11,7 +11,7 @@ const Electric = require("../model/Electric")
 router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
     
-    const user = `${process.env.email_login}:${process.env.password_logins}`
+    const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
     
     config = {
@@ -30,7 +30,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     axios.post('https://vtpass.com/api/merchant-verify', body, config)
       .then(function (response) {
-        console.log(response);
+        console.log(response.json);
       })
       .catch(function (error) {
         console.log(error);
