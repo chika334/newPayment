@@ -59,14 +59,14 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 transactionID: transactionID
             })
             verify.save();
-            res.status(200).json({
+            /*res.status(200).json({
                 msg: "success"
             })
-            return;
+            return;*/
         })
-        .catch(err => res.status(400).send({
-            msg: "Invalid meter number."
-        }))
+        .catch(err => return err)
+        
+    console.log(err)
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
