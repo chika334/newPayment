@@ -44,17 +44,17 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    electric: { msg: "success", success: true },
+                    success: true,
                     msg: "success"
                 })
                 return
             } else {
-                return err
+                throw err
             }
         })
         .catch(err => {
             res.status(400).json({
-                electric: { msg: "Incorrect meter number. Please try with a correct one", success: false },
+                success: false,
                 msg: "Incorrect meter number. Please try with a correct one"
             })
         })
