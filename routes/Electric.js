@@ -33,7 +33,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
     
     try {
         const URL = `${process.env.verifyMeterNumber}`
-        const response = await axios.post(URL);
+        const response = await axios.post(URL, body, config);
     } catch(error) {
         console.log(error)
     }
