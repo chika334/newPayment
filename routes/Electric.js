@@ -61,7 +61,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             verify.save();
             
             console.log(response.data)
-            console.log(response.data.WrongBillersCode)
+            console.log(response.data.content.WrongBillersCode)
             if(response.data.WrongBillersCode) {
                 return err
             } else {
