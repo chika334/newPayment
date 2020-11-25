@@ -67,6 +67,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                     msg: "success"
                 })
                 return
+            } else {
+                return err
             }
         })
         .catch(err => {
