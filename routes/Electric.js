@@ -60,13 +60,13 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             })
             verify.save();
             
-            console.log(response.data)
-            console.log(response.data.content.WrongBillersCode)
-            if(!response.data.WrongBillersCode) {
+            //console.log(response.data)
+            //console.log(response.data.content.WrongBillersCode)
+            if(response.data.WrongBillersCode == false) {
                 res.status(200).json({
                     msg: "success"
                 })
-                //return
+                return
             }
         })
         .catch(err => {
