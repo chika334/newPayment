@@ -36,7 +36,7 @@ router.post('/verifyNumber', auth, async (req, res) => {
         const response = await axios.post(URL, body, config);
         
         //console.log(response)
-        response.status(200).json({
+        res.status(200).json({
             msg: "success"
         })
         return
