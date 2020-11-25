@@ -60,8 +60,6 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             })
             verify.save();
             
-            //console.log(response.data)
-            //console.log(response.data.content.WrongBillersCode)
             if(response.data.WrongBillersCode == false) {
                 res.status(200).json({
                     msg: "success"
@@ -73,7 +71,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         })
         .catch(err => {
             res.status(400).json({
-                msg: response.content.error
+                msg: "Incorrect meter number. Please try with a correct one"
             })
         })
 })
