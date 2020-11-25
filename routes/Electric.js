@@ -41,7 +41,9 @@ router.post('/verifyNumber', auth, async (req, res) => {
         })*/
     } catch(error) {
         if(error.response) {
-            throw error.response.data
+            respose.status(400).json({
+                msg: error.response.data
+            })
         }
         //console.log(error)
         /*res.status(400).json({
