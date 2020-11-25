@@ -44,8 +44,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    msg: "success",
-                    success: true
+                    electric: { msg: "success", success: true },
+                    msg: "success"
                 })
                 return
             } else {
@@ -54,15 +54,14 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         })
         .catch(err => {
             res.status(400).json({
-                msg: "Incorrect meter number. Please try with a correct one",
-                success: false
+                electric: { msg: "Incorrect meter number. Please try with a correct one", success: false },
+                msg: "Incorrect meter number. Please try with a correct one"
             })
         })
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
     const { name, AmountInt, meter, service, select, phone } = req.body
-    //console.log(req.body)
     
     const requestId = uuidv4();
 
