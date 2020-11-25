@@ -51,15 +51,9 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 msg: "success"
             })
         } else {
-            throw error
+            return error
         }
     } catch(error) {
-        /*if(error.response) {
-            res.status(400).json({
-                msg: error.response.data
-            })
-        }*/
-        //console.log(error)
         res.status(400).json({
             msg: "Invalid meter number."
         })
