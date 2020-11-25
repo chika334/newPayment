@@ -59,12 +59,13 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 transactionID: transactionID
             })
             verify.save();
-            res.json(verify)
+            //res.json(verify)
         })
         .catch(err => {
-            response.json({
+            console.log(err)
+            /*response.json({
                 msg: "error"
-            })
+            })*/
         })
 })
 
