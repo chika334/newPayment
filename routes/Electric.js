@@ -9,7 +9,7 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
-router.post('/verifyNumber', auth, async (req, res) => {
+router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -46,9 +46,13 @@ router.post('/verifyNumber', auth, async (req, res) => {
         verify.save();
         
         //console.log(response.data)
-        res.status(200).json({
-            msg: "success"
-        })
+        if(!error) {
+            res.status(200).json({
+                msg: "success"
+            })
+        } else {
+            throw error
+        }
     } catch(error) {
         /*if(error.response) {
             res.status(400).json({
