@@ -51,14 +51,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     }*/
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
-            const verify = new Verify({
-                Customer_Name: response.data.content.Customer_Name,
-                Meter_Number: response.data.content.Meter_Number,
-                Address: response.data.content.Address,
-                walletId: userId._id,
-                transactionID: transactionID
-            })
-            verify.save();
+            console.log(response)
             //res.json(verify)
         })
         .catch(err => {
