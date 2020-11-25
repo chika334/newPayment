@@ -62,13 +62,13 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             if(response.data.WrongBillersCode) {
                 return err
             } else {
-                response.status(200).json({
+                res.status(200).json({
                     msg: "success"
                 })
             }
         })
         .catch(err => {
-            response.status(400).json({
+            err.status(400).json({
                 msg: response.content.error
             })
         })
