@@ -64,14 +64,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             })
             return;*/
         })
-        .catch(err => err)
-        .finally{
-            if(response) {
-                console.log("Good")
-            } else {
-                console.log("Bad")
-            }
-        }
+        .catch(err => throw 404)
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
