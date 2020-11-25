@@ -31,24 +31,6 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-   /* try {
-        const URL = `${process.env.verifyMeterNumber}`
-        const response = await axios.post(URL, body, config);
-        
-        const verify = new Verify({
-            Customer_Name: response.data.content.Customer_Name,
-            Meter_Number: response.data.content.Meter_Number,
-            Address: response.data.content.Address,
-            walletId: userId._id,
-            transactionID: transactionID
-        })
-        
-        verify.save();
-        console.log(verify)
-        return;
-    } catch(error) {
-        console.log(error)
-    }*/
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
             const verify = new Verify({
@@ -62,7 +44,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    message: "success",
+                    msg: "success",
                     success: true
                 })
                 return
