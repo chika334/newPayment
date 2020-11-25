@@ -31,7 +31,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    try {
+   /* try {
         const URL = `${process.env.verifyMeterNumber}`
         const response = await axios.post(URL, body, config);
         
@@ -48,8 +48,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         return;
     } catch(error) {
         console.log(error)
-    }
-    /*axios.post(process.env.verifyMeterNumber, body, config)
+    }*/
+    axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
             const verify = new Verify({
                 Customer_Name: response.data.content.Customer_Name,
@@ -59,11 +59,11 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 transactionID: transactionID
             })
             verify.save();
-            res.json
+            res.json(verify)
         })
         .catch(err => {
-            res.json(err)
-        })*/
+            console.log(err)
+        })
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
