@@ -44,8 +44,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         })
         
         verify.save();
-        
-        //console.log(response.data)
+        console.log(verify)
+        return;
     } catch(error) {
         console.log(error)
     }
