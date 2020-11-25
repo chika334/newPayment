@@ -9,6 +9,20 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
+const URL = `${process.env.verifyMeterNumber}`
+const response = await axios.post(URL, body, config);
+
+const verify = new Verify({
+    Customer_Name: response.data.content.Customer_Name,
+    Meter_Number: response.data.content.Meter_Number,
+    Address: response.data.content.Address,
+    walletId: userId._id,
+    transactionID: transactionID
+})
+
+verify.save();
+console.log(verify)
+
 router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
     
@@ -31,25 +45,13 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    /*try {
-        const URL = `${process.env.verifyMeterNumber}`
-        const response = await axios.post(URL, body, config);
-        
-        const verify = new Verify({
-            Customer_Name: response.data.content.Customer_Name,
-            Meter_Number: response.data.content.Meter_Number,
-            Address: response.data.content.Address,
-            walletId: userId._id,
-            transactionID: transactionID
-        })
-        
-        verify.save();
-        console.log(verify)
+    try {
+        response
         return;
     } catch(error) {
         console.log(error)
-    } */
-    axios.post(process.env.verifyMeterNumber, body, config)
+    }
+    /*axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
             const verify = new Verify({
                 Customer_Name: response.data.content.Customer_Name,
@@ -63,7 +65,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         })
         .catch(err => {
             res.json(err)
-        })
+        })*/
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
