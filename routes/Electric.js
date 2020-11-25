@@ -9,7 +9,7 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
-router.post('/verifyNumber', auth, async (req, res) => {
+router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -42,12 +42,22 @@ router.post('/verifyNumber', auth, async (req, res) => {
             })
             verify.save();
         })
-        .then(res.status(200).send({
+        /*.then(res.status(200).send({
             msg: "success"
-        }))
+        }))*/
         .catch(err => res.status(400).send({
             msg: "Invalid meter number."
         }))
+   
+   if(!error) {
+    res.status(200).json({
+        msg: "success"
+    }) 
+   } else {
+    res.status(400).json({
+        msg: "Invalid meter number."
+    })
+   }
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
