@@ -9,7 +9,7 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
-router.post('/verifyNumber', auth, async (req, res, error) => {
+router.post('/verifyNumber', auth, async (req, res, next) => {
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -49,15 +49,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             msg: "Invalid meter number."
         }))
    
-   if(!error) {
-    res.status(200).json({
-        msg: "success"
-    }) 
-   } else {
-    res.status(400).json({
-        msg: "Invalid meter number."
-    })
-   }
+   next()
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
