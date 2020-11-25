@@ -9,19 +9,21 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
-const URL = `${process.env.verifyMeterNumber}`
-const response = await axios.post(URL, body, config);
+async function fetch() {
+    const URL = `${process.env.verifyMeterNumber}`
+    const response = await axios.post(URL, body, config);
 
-const verify = new Verify({
-    Customer_Name: response.data.content.Customer_Name,
-    Meter_Number: response.data.content.Meter_Number,
-    Address: response.data.content.Address,
-    walletId: userId._id,
-    transactionID: transactionID
-})
+    const verify = new Verify({
+        Customer_Name: response.data.content.Customer_Name,
+        Meter_Number: response.data.content.Meter_Number,
+        Address: response.data.content.Address,
+        walletId: userId._id,
+        transactionID: transactionID
+    })
 
-verify.save();
-console.log(verify)
+    verify.save();
+    console.log(verify)
+}
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
@@ -46,7 +48,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     const userId = await Wallet.findById(req.user.walletId)
     
     try {
-        response
+        fetch()
         return;
     } catch(error) {
         console.log(error)
