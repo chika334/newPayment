@@ -59,6 +59,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 transactionID: transactionID
             })
             verify.save();
+            
+            console.log(response.data)
             console.log(response.data.WrongBillersCode)
             if(response.data.WrongBillersCode) {
                 return err
