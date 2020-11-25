@@ -34,10 +34,6 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
     try {
         const URL = `${process.env.verifyMeterNumber}`
         const response = await axios.post(URL, body, config);
-        validateStatus: function (status) {
-            return status < 500; 
-            // If response status code is less than 500 call the success function
-        }
         
         const verify = new Verify({
             Customer_Name: response.data.content.Customer_Name,
@@ -51,6 +47,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         
         //console.log(response.data)
     } catch(error) {
+        console.log(error)
     }
 })
 
