@@ -35,8 +35,8 @@ router.post('/verifyNumber', auth, async (req, res) => {
         const URL = `${process.env.verifyMeterNumber}`
         const response = await axios.post(URL, body, config);
         
-        //console.log(response)
-        response.status(200).json({
+        console.log(response)
+        return response.status(200).json({
             msg: "success"
         })
     } catch(error) {
