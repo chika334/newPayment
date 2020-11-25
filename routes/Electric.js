@@ -64,7 +64,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             })
             return;*/
         })
-        .catch(err => throw 404)
+        .catch(err => {throw 404})
         .finally{
             if(response) {
                 console.log("Good")
