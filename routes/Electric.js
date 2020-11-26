@@ -9,7 +9,7 @@ const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
     const verify = await Verify.find({ walletId: req.user.walletId })
-    console.log(verify)
+    console.log(req)
     //res.status(200).json(verify)
 })
 
