@@ -46,7 +46,7 @@ router.post('/verifyNumber', async (req, res, error) => {
                 transactionID: transactionID
             })
             verify.save();
-            
+            console.log(response.data)
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
                     electric: transactionID,
