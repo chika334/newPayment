@@ -13,7 +13,7 @@ router.get('/verifyNumber', auth, async (req, res) => {
     res.status(200).json(verify)
 })
 
-router.post('/verifyNumber', auth, async (req, res, error) => {
+router.post('/verifyNumber', async (req, res, error) => {
     const { meter, service, select, transactionID } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
