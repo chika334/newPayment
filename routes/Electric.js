@@ -9,7 +9,7 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
-router.get('/dataTransaction', auth, async (req, res) => {
+router.get('/NumberverifyTransaction', auth, async (req, res) => {
     const electric = await Verify.find({ transactionID: req.user.transactionID })
     res.status(200).json(electric)
 })
