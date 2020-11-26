@@ -7,10 +7,10 @@ const { v4: uuidv4 } = require('uuid');
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
-router.get('/NumberverifyTransaction', auth, async (req, res) => {
+router.get('/verifyNumber', auth, async (req, res) => {
     const electric = await Verify.find({ transactionID: req.user.transactionID })
-    console.log(electric)
-    //res.status(200).json(electric)
+    //console.log(electric)
+    res.status(200).json(electric)
 })
 
 router.post('/verifyNumber', async (req, res, error) => {
