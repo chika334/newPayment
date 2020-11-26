@@ -8,8 +8,7 @@ const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
-    const verify = await Verify.find({ _id: req.user._id })
-    //console.log(req.user._id)
+    const verify = await Verify.find({ walletId: req.user.walletId })
     res.json(verify)
 })
 
@@ -31,7 +30,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         type: select
     }
     
-    const userId = 
+    const userId = await Wallet.findById(req.user.walletId)
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
@@ -39,7 +38,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 Customer_Name: response.data.content.Customer_Name,
                 Meter_Number: response.data.content.Meter_Number,
                 Address: response.data.content.Address,
-                transactionID: req.body.transactionID
+                transactionID: req.body.transactionID,
+                walletId: userId._id,
             })
             verify.save();
             if(response.data.content.WrongBillersCode == false) {
