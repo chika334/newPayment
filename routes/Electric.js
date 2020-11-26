@@ -101,11 +101,19 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
                 amount: AmountInt, 
                 product_name: res.data.content.product_name 
             })
-            
+            electric.save();
+            if (res.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
+                throw err
+            } else {
+                res.status(200).json({
+                     msg: 'success'
+                })
+            }
          })
-         .catch(err => console.log(err))
-         res.status(200).json({
-             msg: 'success'
+         .catch(err => {
+            res.status(400).json({
+                msg: "Below minimum amount allowed"
+            })
          })
     })
     
