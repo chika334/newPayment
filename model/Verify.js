@@ -6,6 +6,7 @@ const Verifyelectric = new mongoose.Schema({
     Address: String,
     walletId: String,
     transactionID: String
+    type: String
 }, { timestamp: true })
 
 module.exports = mongoose.model('Verify', Verifyelectric)

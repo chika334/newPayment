@@ -40,6 +40,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 Address: response.data.content.Address,
                 transactionID: req.body.transactionId,
                 walletId: userId._id,
+                type: select
             })
             verify.save();
             if(response.data.content.WrongBillersCode == false) {
