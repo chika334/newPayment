@@ -9,7 +9,7 @@ const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
     const verify = await Verify.findById(req.user._id)
-    console.log(req)
+    console.log(verify)
     //res.status(200).json(verify)
 })
 
