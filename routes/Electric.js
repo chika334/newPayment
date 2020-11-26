@@ -13,7 +13,7 @@ router.get('/verifyNumber', auth, async (req, res) => {
     //res.status(200).json(verify)
 })
 
-router.post('/verifyNumber', async (req, res, error) => {
+router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -33,7 +33,7 @@ router.post('/verifyNumber', async (req, res, error) => {
         type: select
     }
     
-    //const userId = await Wallet.findById(req.user.walletId)
+    const userId = await Wallet.findById(req.user.walletId)
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
@@ -41,11 +41,11 @@ router.post('/verifyNumber', async (req, res, error) => {
                 Customer_Name: response.data.content.Customer_Name,
                 Meter_Number: response.data.content.Meter_Number,
                 Address: response.data.content.Address,
-                //walletId: userId._id,
+                walletId: userId._id,
                 transactionID: transactionID
             })
             verify.save();
-            console.log(response.data)
+            //console.log(response.data)
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
                     electric: transactionID,

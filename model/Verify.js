@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const VerifyelectricSchema = new mongoose.Schema({
+const Verifyelectric = new mongoose.Schema({
     Customer_Name: String,
     Meter_Number: String,
     Address: String,
@@ -8,4 +8,4 @@ const VerifyelectricSchema = new mongoose.Schema({
     transactionID: String
 }, { timestamp: true })
 
-module.exports = mongoose.model('Verify', VerifyelectricSchema)
+module.exports = mongoose.model('Verify', Verifyelectric)
