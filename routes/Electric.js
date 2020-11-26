@@ -34,7 +34,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         type: select
     }
     
-    const userId = await Wallet.findById(req.user.walletId)
+    //const userId = await Wallet.findById(req.user.walletId)
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
@@ -42,7 +42,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 Customer_Name: response.data.content.Customer_Name,
                 Meter_Number: response.data.content.Meter_Number,
                 Address: response.data.content.Address,
-                walletId: userId._id,
+                //walletId: userId._id,
                 transactionID: transactionID
             })
             verify.save();
