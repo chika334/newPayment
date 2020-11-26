@@ -13,7 +13,7 @@ router.get('/verifyNumber', auth, async (req, res) => {
 })
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
-    const { meter, service, select, transactionID } = req.body
+    const { meter, service, select, transactionId } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
@@ -38,7 +38,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 Customer_Name: response.data.content.Customer_Name,
                 Meter_Number: response.data.content.Meter_Number,
                 Address: response.data.content.Address,
-                transactionID: req.body.transactionID,
+                transactionID: req.body.transactionId,
                 walletId: userId._id,
             })
             verify.save();
