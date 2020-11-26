@@ -9,7 +9,6 @@ const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
     const verify = await Verify.find({ walletId: req.user.walletId })
-    console.log(verify)
     res.json(verify)
 })
 
@@ -45,7 +44,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             verify.save();
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    verify: transactionID,
+                    verify,
                     success: true,
                     msg: "success"
                 })
