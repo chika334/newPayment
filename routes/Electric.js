@@ -3,9 +3,7 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
 const axios = require('axios')
-const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
-const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
