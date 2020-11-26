@@ -8,8 +8,9 @@ const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
-    const electric = await Verify.find({ walletId: req.user.walletId })
-    res.json(electric)
+    const verify = await Verify.find({ walletId: req.user.walletId })
+    console.log(verify)
+    res.json(verify)
 })
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
@@ -44,7 +45,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             verify.save();
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    electric: transactionID,
+                    verify: transactionID,
                     success: true,
                     msg: "success"
                 })
@@ -99,7 +100,6 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
                 amount: AmountInt, 
                 product_name: res.data.content.product_name 
             })
-            console.log(res.data)
          })   
          .catch(err => console.log(err))
          res.status(200).json({
