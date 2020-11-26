@@ -9,7 +9,6 @@ const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
     const electric = await Verify.find({ transactionID: req.user.transactionID })
-    //console.log(electric)
     res.status(200).json(electric)
 })
 
