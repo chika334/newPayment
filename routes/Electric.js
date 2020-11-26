@@ -89,6 +89,7 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
 
     axios.post(`${process.env.prepaidMeterPayment}`, body, config)
         .then(res => {
+            console.log(res.data)
             const electric = new Electric({
                 Customer_Name: res.data.content.Customer_Name, 
                 Meter_Number: meter, 
@@ -100,7 +101,8 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
                 amount: AmountInt, 
                 product_name: res.data.content.product_name 
             })
-         })   
+            
+         })
          .catch(err => console.log(err))
          res.status(200).json({
              msg: 'success'
