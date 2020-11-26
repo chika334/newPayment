@@ -8,9 +8,9 @@ const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
-    /*const verify = await Verify.find({ transactionID: req.user.transactionID })
-    res.status(200).json(verify)*/
-    console.log(req.user)
+    const verify = await Verify.find({ walletId: req.user.walletId })
+    res.status(200).json(verify)
+    //console.log(req.user)
 })
 
 router.post('/verifyNumber', async (req, res, error) => {
