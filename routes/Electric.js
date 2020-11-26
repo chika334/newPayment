@@ -9,6 +9,11 @@ const Transaction = require("../model/Transaction")
 const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
+router.get('/dataTransaction', auth, async (req, res) => {
+    const electric = await Verify.find({ transactionID: req.user.transactionID })
+    res.status(200).json(electric)
+})
+
 router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select } = req.body
     
@@ -44,6 +49,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
+                    electric: transactionID
                     success: true,
                     msg: "success"
                 })
