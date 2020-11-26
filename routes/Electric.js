@@ -9,17 +9,15 @@ const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
     const verify = await Verify.find({ walletId: req.user.walletId })
-    console.log(verify)
-    //res.status(200).json(verify)
+    //console.log(verify)
+    res.status(200).json(verify)
 })
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
-    const { meter, service, select } = req.body
+    const { meter, service, select, transactionID } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
-    
-    const transactionID = uuidv4();
     
     config = {
         headers: {
@@ -33,19 +31,15 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
         type: select
     }
     
-    const userId = await Wallet.findById(req.user.walletId)
-    
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
             const verify = new Verify({
                 Customer_Name: response.data.content.Customer_Name,
                 Meter_Number: response.data.content.Meter_Number,
                 Address: response.data.content.Address,
-                walletId: userId._id,
-                transactionID: transactionID
+                transactionID: req.body.transactionID
             })
             verify.save();
-            //console.log(response.data)
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
                     electric: transactionID,
