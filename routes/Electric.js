@@ -8,8 +8,8 @@ const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
-    const verify = await Verify.findById(req.user._id)
-    //console.log(verify)
+    const verify = await Verify.find({ _id: req.user._id })
+    console.log(req.user._id)
     res.status(200).json(verify)
 })
 
