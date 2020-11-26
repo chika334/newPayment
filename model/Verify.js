@@ -5,7 +5,7 @@ const Verifyelectric = new mongoose.Schema({
     Meter_Number: String,
     Address: String,
     walletId: String,
-    transactionID: String
+    transactionID: String,
     select: String
 }, { timestamp: true })
 
