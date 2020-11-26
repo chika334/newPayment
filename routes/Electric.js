@@ -8,7 +8,7 @@ const Electric = require("../model/Electric")
 const Verify = require("../model/Verify")
 
 router.get('/verifyNumber', auth, async (req, res) => {
-    const verify = await Verify.find({ walletId: req.user.walletId })
+    const verify = await Verify.findById(req.user._id)
     console.log(req)
     //res.status(200).json(verify)
 })
@@ -30,6 +30,8 @@ router.post('/verifyNumber', async (req, res, error) => {
         serviceID: service,
         type: select
     }
+    
+    const userId = 
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
