@@ -49,7 +49,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
             
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    electric: transactionID
+                    electric: transactionID,
                     success: true,
                     msg: "success"
                 })
