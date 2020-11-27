@@ -10,7 +10,7 @@ router.post("/kyc-bvn", (req, res) => {
             msg: "Input all fields"
         })
     }
-    User.findById(_id, function (err, user) {
+    User.find({ _id: req.body._id}, function (err, user) {
         if (err || !user) {
             console.log(user)
             return res.status(400).json({
