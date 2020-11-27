@@ -12,8 +12,8 @@ router.post("/kyc-bvn", (req, res) => {
         })
     }
     User.findById(_id, function (err, user) {
-        if (err || !user) {
-            console.log(err)
+        if (!user) {
+            //console.log(err)
             return res.status(400).json({
                 msg: "User does not exist"
             })
