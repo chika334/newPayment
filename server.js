@@ -35,8 +35,6 @@ app.use('/api', electric)
 app.use('/api', data)
 app.use('/api', kyc)
 
-app.use('/uploads', express.static('uploads'));
-
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

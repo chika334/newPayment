@@ -2,6 +2,7 @@ const express = require("express")
 const router = express.Router()
 const User = require("../model/User")
 const multer = require('multer')
+const app = express();
 
 router.post("/kyc-bvn", (req, res) => {
     const { _id, firstname, middlename, lastname, birthday, bvn, bvnphone } = req.body
@@ -25,7 +26,7 @@ router.post("/kyc-bvn", (req, res) => {
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, './uploads/')
+    cb(null, 'uploads/')
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}_${file.originalname}`)
@@ -38,6 +39,8 @@ let storage = multer.diskStorage({
     cb(null, true)
   }
 })
+
+app.use('/uploads', express.static('uploads'));
 
 const uploads = multer({ storage: storage })
 
