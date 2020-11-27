@@ -5,7 +5,6 @@ const multer = require('multer')
 
 router.post("/kyc-bvn", (req, res) => {
     const { _id, firstname, middlename, lastname, birthday, bvn, bvnphone } = req.body
-    console.log(req.body)
     if (firstname === "" || lastname === "" || middlename === "" || birthday === "" || bvn === "" || bvnphone === "") {
         return res.status(400).json({
             msg: "Input all fields"
@@ -48,8 +47,7 @@ router.post("/companyUpdate", uploaded, (req, res) => {
     const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
     const { caccertificate, idcard, passport, bill } = req.files
     
-    User.findOneAndUpdate({ _id: req.body._id}, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, passport, bill, idcard }, function (err, user) {
-    console.log(user)
+    User.findOneAndUpdate(user_id, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, passport, bill, idcard }, function (err, user) {
         if (err || !user) {
            return res.status(400).json({
             msg: "User does not exist"
