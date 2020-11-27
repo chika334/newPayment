@@ -52,6 +52,26 @@ const UserSchema = new mongoose.Schema({
 		type: String,
 	},
 	walletId: String,
+	companyname: String,
+	companyaddress: String,
+	homeaddress: String,
+	alternatephone: String,
+	localgov: String,
+	State: String,
+	identity: String,
+	talk: String,
+	caccertificate: {
+	    path: String
+	},
+	passport: {
+	    path: String
+	},
+	bill: {
+	    path: String
+	},
+	idcard: {
+	    path: String
+	}
 }, { timestamp: true })
 
 UserSchema.methods.generateAuthToken = function () {
