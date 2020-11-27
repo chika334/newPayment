@@ -53,6 +53,8 @@ let storage = multer.diskStorage({
   }
 })
 
+app.use('/uploads', express.static('uploads'));
+
 const uploads = multer({ storage: storage })
 
 const uploaded = uploads.fields([{ name: 'caccertificate', maxCount: 1}, { name: 'idcard', maxCount: 1}, { name: 'bill', maxCount: 1}, { name: 'passport', maxCount: 1}])
@@ -73,8 +75,6 @@ router.post("/api/companyUpdate", uploaded, (req, res) => {
        }
     })
 })
-
-app.use('/uploads', express.static('uploads'));
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
