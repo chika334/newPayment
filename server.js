@@ -13,6 +13,7 @@ const airtime = require("./routes/airtime")
 const electric = require('./routes/Electric')
 //const insurance = require('./routes/insurance')
 const data = require('./routes/Data')
+const kyc = require('./routes/KYCandBVN')
 
 // middleware
 app.use(cors({origin: true, credentials: true}));
@@ -32,6 +33,7 @@ app.use('/api', airtime);
 app.use('/api', electric)
 //app.use('/api', insurance);
 app.use('/api', data)
+app.use('/api', kyc)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
