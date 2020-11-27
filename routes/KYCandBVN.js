@@ -10,25 +10,23 @@ router.post("/kyc-bvn", (req, res) => {
             msg: "Input all fields"
         })
     }
-    User.findOneAndUpdate({ _id: req.body._id}, { firstname, middlename, lastname, birthday, bvn, bvnphone }, function (err, user) {
-        /*if (err || !user) {
+    User.find({ _id: req.body._id}, function (err, user) {
+        if (err || !user) {
             console.log(user)
             return res.status(400).json({
                 msg: "User does not exist"
             })
-        }*/
+        }
         
-        //user.updateOne({ firstname, middlename, lastname, birthday, bvn, bvnphone }, (err, success) => {
+        user.updateOne({ firstname, middlename, lastname, birthday, bvn, bvnphone }, (err, success) => {
             if (err) {
-               return res.status(400).json({
-                msg: "User does not exist"
-            })
+               return res.json({ error: console.log(err)})
            } else {
              res.status(200).json({
                msg: `Thanks for updating your profile`
              });
            }
-        //})
+        })
     })
 })
 
