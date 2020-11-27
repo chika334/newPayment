@@ -23,23 +23,23 @@ router.post("/kyc-bvn", (req, res) => {
     })
 })
 
-let Storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-        cb(null, `${Date.now()}_${file.originalname}`)
-    },
-    fileFilter: (req, file, cb) => {
-        const ext = path.extname(file.originalname)
-        if (ext !== '.jpg' && ext !== '.png' && ext !== '.jpeg') {
-            return cb(res.status(400).end('Only jpg, png, jpeg are allowed'), false)
-        }
-        cb(null, true)
+let storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`)
+  },
+  fileFilter: (req, file, cb) => {
+    const ext = path.extname(file.originalname)
+    if (ext !== '.jpg' && ext !== '.png' && ext !== '.mp4') {
+      return cb(res.status(400).end('only jpg, png, mp4 is allowed'), false);
     }
+    cb(null, true)
+  }
 })
 
-const uploads = multer({ storage: Storage })
+const uploads = multer({ storage: storage })
 
 const uploaded = uploads.fields([{ name: 'caccertificate', maxCount: 1}, { name: 'idcard', maxCount: 1}, { name: 'bill', maxCount: 1}, { name: 'passport', maxCount: 1}])
 
