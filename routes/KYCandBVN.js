@@ -48,7 +48,7 @@ router.post("/companyUpdate", uploaded, (req, res) => {
     const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
     const { caccertificate, idcard, passport, bill } = req.files
     
-    User.findOneAndUpdate({ _id: req.body._id}, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, passport, bill, idcard }, function (err, user) {
+    User.findByIdAndUpdate({ _id: req.body._id}, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, passport, bill, idcard }, function (err, user) {
     console.log(user)
         if (err || !user) {
            return res.status(400).json({
