@@ -1,4 +1,4 @@
-const Wallet = require('../model/Wallet')
+/*const Wallet = require('../model/Wallet')
 const express = require('express')
 const router = express.Router()
 const auth = require('../middleware/auth')
@@ -48,4 +48,4 @@ router.post('/insurance', auth, async (req, res) => {
         .catch(err => console.log(err))
 })
 
-module.exports = router;
+module.exports = router;*/

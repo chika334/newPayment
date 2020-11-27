@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+/*const mongoose = require("mongoose")
 
 const InsuranceSchema = new mongoose.Schema({
     product_name: String,
@@ -12,4 +12,4 @@ const InsuranceSchema = new mongoose.Schema({
     walletId: String
 }, { timestamp: true })
 
-module.exports = mongoose.model('Insurance', InsuranceSchema)
+module.exports = mongoose.model('Insurance', InsuranceSchema)*/
