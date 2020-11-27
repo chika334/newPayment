@@ -1,7 +1,6 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../model/User")
-const multer = require('multer')
 const app = express();
 
 router.post("/kyc-bvn", (req, res) => {
