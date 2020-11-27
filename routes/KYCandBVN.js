@@ -11,7 +11,7 @@ router.post("/kyc-bvn", (req, res) => {
             msg: "Input all fields"
         })
     }
-    User.findOneAndUpdate({ _id: req.body._id}, { firstname, middlename, lastname, birthday, bvn, bvnphone }, function (err, user) {
+    User.findOneAndUpdate(_id, { firstname, middlename, lastname, birthday, bvn, bvnphone }, function (err, user) {
         if (err || !user) {
            return res.status(400).json({
             msg: "User does not exist"
