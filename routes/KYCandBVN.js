@@ -48,22 +48,17 @@ router.post("/companyUpdate", uploaded, (req, res) => {
     const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
     const { caccertificate, idcard, passport, bill } = req.files
     
-    User.findById(user_id, function (err, user) {
+    User.findOneAndUpdate({ _id: req.body._id}, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, passport, bill, idcard }, function (err, user) {
+    console.log(user)
         if (err || !user) {
-            return res.status(400).json({
-                msg: "User does not exist"
-            })
-        }
-    
-        user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, passport, bill, idcard }, (err, success) => {
-            if (err) {
-               return res.json({ error: console.log(err)})
-           } else {
-             res.status(200).json({
-               msg: `Thanks for updating your company profile`
-             });
-           }
+           return res.status(400).json({
+            msg: "User does not exist"
         })
+       } else {
+         res.status(200).json({
+           msg: `Thanks for updating your profile`
+         });
+       }
     })
 })
 
