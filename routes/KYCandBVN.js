@@ -5,7 +5,7 @@ const multer = require('multer')
 
 router.post("/kyc-bvn", (req, res) => {
     const { _id, firstname, middlename, lastname, birthday, bvn, bvnphone } = req.body
-    console.log(req.body)
+    //console.log(req.body)
     if (firstname === "" || lastname === "" || middlename === "" || birthday === "" || bvn === "" || bvnphone === "") {
         return res.status(400).json({
             msg: "Input all fields"
@@ -13,6 +13,7 @@ router.post("/kyc-bvn", (req, res) => {
     }
     User.findById(_id, function (err, user) {
         if (err || !user) {
+            console.log(err)
             return res.status(400).json({
                 msg: "User does not exist"
             })
