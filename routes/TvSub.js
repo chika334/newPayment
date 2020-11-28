@@ -26,7 +26,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, error) => {
     }
     
     const body = {
-        billersCode: smartCard:,
+        billersCode: smartCard,
         serviceID: service
     }
     
