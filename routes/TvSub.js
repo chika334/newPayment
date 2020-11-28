@@ -12,7 +12,7 @@ router.get('/verifyNumber', auth, async (req, res) => {
     res.json(verify)
 })
 
-router.post('/verifySmartcardNumber', auth, async (req, res, error) => {
+router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
     //console.log(req.body)
     const { service, smartCard, transactionId, select } = req.body
     
