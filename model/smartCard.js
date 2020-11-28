@@ -3,7 +3,6 @@ const mongoose = require("mongoose")
 const VerifysmartCard = new mongoose.Schema({
     Customer_Name: String,
     Smartcard_Number: String,
-    Address: String,
     Customer_ID: String,
     walletId: String,
     transactionID: String,
