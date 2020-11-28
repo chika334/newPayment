@@ -5,7 +5,7 @@ const auth = require('../middleware/auth')
 const axios = require('axios')
 const { v4: uuidv4 } = require('uuid');
 //const Electric = require("../model/Electric")
-const Smartcard = require("../model/Smartcard")
+const Smartcard = require("../model/smartCard")
 
 router.get('/verifyNumber', auth, async (req, res) => {
     const verify = await Verify.find({ walletId: req.user.walletId })
