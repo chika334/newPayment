@@ -5,7 +5,7 @@ const auth = require('../middleware/auth')
 const axios = require('axios')
 const { v4: uuidv4 } = require('uuid');
 //const Electric = require("../model/Electric")
-//const Verify = require("../model/Verify")
+const Smartcard = require("../model/Smartcard")
 
 router.get('/verifyNumber', auth, async (req, res) => {
     const verify = await Verify.find({ walletId: req.user.walletId })
@@ -13,8 +13,8 @@ router.get('/verifyNumber', auth, async (req, res) => {
 })
 
 router.post('/verifySmartcardNumber', auth, async (req, res, error) => {
-    console.log(req.body)
-    /*const { meter, service, select, transactionId } = req.body
+    //console.log(req.body)
+    const { service, smartCard, transactionId } = req.body
     
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
@@ -26,7 +26,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, error) => {
     }
     
     const body = {
-        billersCode: meter,
+        billersCode: smartCard:,
         serviceID: service
     }
     
@@ -34,7 +34,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, error) => {
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
-            const verify = new Verify({
+            const smartCard = new Smartcard({
                 Customer_Name: response.data.content.Customer_Name,
                 Meter_Number: response.data.content.Meter_Number,
                 Address: response.data.content.Address,
@@ -42,10 +42,10 @@ router.post('/verifySmartcardNumber', auth, async (req, res, error) => {
                 walletId: userId._id,
                 select: select
             })
-            verify.save();
+            smartCard.save();
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    verify,
+                    smartCard,
                     success: true,
                     msg: "success"
                 })
@@ -55,11 +55,12 @@ router.post('/verifySmartcardNumber', auth, async (req, res, error) => {
             }
         })
         .catch(err => {
-            res.status(400).json({
+            console.log(err)
+            /*res.status(400).json({
                 success: false,
                 msg: "Incorrect meter number. Please try with a correct one"
-            })
-        })*/
+            })*/
+        })
 })
 
 router.post('/prepaidMeterPayment', auth, async (req, res) => {
