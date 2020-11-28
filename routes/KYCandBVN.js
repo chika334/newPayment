@@ -45,9 +45,9 @@ const uploaded = uploads.fields([{ name: 'caccertificate', maxCount: 1}, { name:
 
 router.post("/companyUpdate", uploaded, (req, res) => {
     const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
-    const { caccertificate, idcard, passport, bill } = req.files
+    //const { caccertificate, idcard, passport, bill } = req.files
     
-    User.findOneAndUpdate(user_id, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, passport, bill, idcard }, function (err, user) {
+    User.findOneAndUpdate(user_id, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, function (err, user) {
         if (err || !user) {
            return res.status(400).json({
             msg: "User does not exist"

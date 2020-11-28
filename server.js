@@ -14,6 +14,7 @@ const electric = require('./routes/Electric')
 //const insurance = require('./routes/insurance')
 const data = require('./routes/Data')
 const kyc = require('./routes/KYCandBVN')
+const TvSub = require('./routes/TvSub')
 
 // middleware
 app.use(cors({origin: true, credentials: true}));
@@ -34,6 +35,7 @@ app.use('/api', electric)
 //app.use('/api', insurance);
 app.use('/api', data)
 app.use('/api', kyc)
+app.use('/api', TvSub)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {

@@ -76,7 +76,7 @@ router.post('/updatePassword', async(req, res) => {
         if (user != null) {
             var hash = user.password
             bcrypt.compare(old_password, hash, function(err, res) {
-            //if (res) {
+            if (res) {
                 // Password match
                 if (new_password == confirm_new_password) {
                     bcrypt.hash(new_password, 10, function(err, hash) {
@@ -85,7 +85,7 @@ router.post('/updatePassword', async(req, res) => {
                     
                     })
                 }
-            //}          
+            }          
             })
         }
         res.status(200).json({
