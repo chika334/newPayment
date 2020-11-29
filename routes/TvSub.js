@@ -34,7 +34,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
-            const smartCard = new Smartcard({
+            /*const smartCard = new Smartcard({
                 Customer_Name: response.data.content.Customer_Name,
                 Smartcard_Number: smartCard,
                 Customer_ID: response.data.content.Customer_ID,
@@ -52,7 +52,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
                 return
             } else {
                 throw err
-            }
+            }*/
             console.log(response.data)
         })
         .catch(err => {
@@ -92,7 +92,7 @@ router.post('/payTvBill', auth, async (req, res, err) => {
     axios.post(`${process.env.PAYTVBILL}`, body, config)
         .then(response => {
             console.log(res.data)
-            const tvsub = new TvSub({
+            /*const tvsub = new TvSub({
                 smartCard: smartCard, 
                 walletId: userId._id, 
                 type: response.data.content.type, 
@@ -108,7 +108,7 @@ router.post('/payTvBill', auth, async (req, res, err) => {
                 res.status(200).json({
                      msg: 'success'
                 })
-            }
+            }*/
          })
          .catch(err => {
             console.log(err)
