@@ -34,7 +34,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
-            /*const smartCard = new Smartcard({
+            const smartCard = new Smartcard({
                 Customer_Name: response.data.content.Customer_Name,
                 Smartcard_Number: smartCard,
                 Customer_ID: response.data.content.Customer_ID,
@@ -43,7 +43,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
                 select: select
             })
             smartCard.save();
-            if(response.data.content.WrongBillersCode == false) {
+            if(response.data.content.Customer_Name != '') {
                 res.status(200).json({
                     smartCard,
                     success: true,
@@ -52,8 +52,8 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
                 return
             } else {
                 throw err
-            }*/
-            console.log(response.data)
+            }
+            //console.log(response.data)
         })
         .catch(err => {
             //console.log(err)
