@@ -4,7 +4,7 @@ const router = express.Router()
 const auth = require('../middleware/auth')
 const axios = require('axios')
 const { v4: uuidv4 } = require('uuid');
-//const Electric = require("../model/Electric")
+const TvSub = require("../model/payTvSub")
 const Smartcard = require("../model/smartCard")
 
 router.get('/verifyNumber', auth, async (req, res) => {
@@ -64,8 +64,8 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
         })
 })
 
-router.post('/prepaidMeterPayment', auth, async (req, res) => {
-    const { name, AmountInt, meter, service, select, phone } = req.body
+router.post('/payTvBill', auth, async (req, res, err) => {
+    const { name, AmountInt, smartCard, service, select, phone } = req.body
     
     const requestId = uuidv4();
 
@@ -81,7 +81,7 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
     const body = {
         request_id: requestId,
         serviceID: service,
-        billerCode: meter,
+        billerCode: smartCard,
         variation_code: select,
         amount: AmountInt,
         phone: phone
@@ -89,22 +89,20 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
 
-    axios.post(`${process.env.prepaidMeterPayment}`, body, config)
-        .then(res => {
+    axios.post(`${process.env.PAYTVBILL}`, body, config)
+        .then(response => {
             console.log(res.data)
-            const electric = new Electric({
-                Customer_Name: res.data.content.Customer_Name, 
-                Meter_Number: meter, 
-                Address: res.data.content.Address, 
+            const tvsub = new TvSub({
+                smartCard: smartCard, 
                 walletId: userId._id, 
-                type: res.data.content.type, 
-                date: res.data.transaction_date.date, 
-                response_description: res.data.response_description, 
+                type: response.data.content.type, 
+                date: response.data.transaction_date.date, 
+                response_description: response.data.response_description, 
                 amount: AmountInt, 
-                product_name: res.data.content.product_name 
+                product_name: response.data.content.product_name 
             })
-            electric.save();
-            if (res.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
+            tvsub.save();
+            if (response.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
                 throw err
             } else {
                 res.status(200).json({
@@ -113,9 +111,10 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
             }
          })
          .catch(err => {
-            res.status(400).json({
+            console.log(err)
+            /*res.status(400).json({
                 msg: "Below minimum amount allowed"
-            })
+            })*/
          })
     })
     
