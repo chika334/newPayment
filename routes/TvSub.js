@@ -56,11 +56,11 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
             console.log(response.data)
         })
         .catch(err => {
-            //console.log(err)
-            res.status(400).json({
+            console.log(err)
+            /*res.status(400).json({
                 success: false,
                 msg: "Invalid Smartcard Number. Please check and Try Again"
-            })
+            })*/
         })
 })
 
