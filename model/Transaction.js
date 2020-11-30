@@ -9,7 +9,8 @@ const TransactionSchema = new mongoose.Schema({
     date: String,
     amount: String,
     status: String,
-    walletId: String
+    walletId: String,
+    uniqueId: String
 }, { timestamp: true })
 
 module.exports = mongoose.model('Transaction', TransactionSchema)
