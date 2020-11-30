@@ -68,7 +68,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 })
 
 router.post('/Transaction', auth, async (req, res) => {
-    const { trans, uniqueID } = req.body
+    const { trans } = req.body
 
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
@@ -95,8 +95,7 @@ router.post('/Transaction', auth, async (req, res) => {
                 total_amount: response.data.content.transactions.total_amount,
                 transactionId: response.data.content.transactions.transactionId,
                 status: response.data.response_description,
-                walletId: userId._id,
-                uniqueId: uniqueID
+                walletId: userId._id
             })
 
             trans.save();
@@ -119,7 +118,7 @@ router.post('/Transaction', auth, async (req, res) => {
             res.status(400).json({
                 msg: "Error occured while querying transaction"
             })
-        }))
+        })
 })
 
 module.exports = router;
