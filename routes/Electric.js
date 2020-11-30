@@ -117,4 +117,51 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
          })
     })
     
+
+router.post('/DataTransaction', auth, async (req, res) => {
+    const { AmountInt, service, phone, variation } = req.body
+    const requestId = uuidv4();
+
+    const user = `${process.env.email_login}:${process.env.password_login}`
+    const base64 = Buffer.from(user).toString('base64');
+    
+    const uniqueId = uuidv4();
+
+    const config = {
+        headers: {
+          "Authorization": `Basic ${base64}`
+        }
+      }
+
+    const body = {
+        request_id: requestId,
+        serviceID: service,
+        amount: AmountInt,
+        billersCode: phone,
+        variation_code: variation,
+        amount: AmountInt,
+        phone: phone
+    }
+    
+    const userId = await Wallet.findById(req.user.walletId)
+
+    axios.post(`${process.env.singleElectric}`, body, config)
+        .then(res => {
+            const trans = new Transaction({
+                amount: response.data.content.transactions.amount,
+                requestId: req.body.trans,
+                product_name: response.data.content.transactions.type,
+                date: response.data.transaction_date.date,
+                total_amount: response.data.content.transactions.total_amount,
+                transactionId: response.data.content.transactions.transactionId,
+                status: response.data.response_description,
+                walletId: userId._id,
+                uniqueId: uniqueId
+            })
+            trans.save();
+        })
+        .catch(err => console.log(err))
+})
+
+    
 module.exports = router;

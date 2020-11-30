@@ -89,7 +89,7 @@ router.post('/payTvBill', auth, async (req, res, err) => {
 
     axios.post(`${process.env.PAYTVBILL}`, body, config)
         .then(response => {
-            console.log(res.data)
+            //console.log(res.data)
             /*const tvsub = new TvSub({
                 smartCard: smartCard, 
                 walletId: userId._id, 

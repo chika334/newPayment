@@ -68,12 +68,10 @@ router.post('/creditTransaction', auth, async (req, res) => {
 })
 
 router.post('/Transaction', auth, async (req, res) => {
-    const { trans } = req.body
+    const { trans, uniqueID } = req.body
 
     const user = `${process.env.email_login}:${process.env.password_login}`
     const base64 = Buffer.from(user).toString('base64');
-    
-    const uniqueId = uuidv4();
 
     const config = {
         headers: {
@@ -98,7 +96,7 @@ router.post('/Transaction', auth, async (req, res) => {
                 transactionId: response.data.content.transactions.transactionId,
                 status: response.data.response_description,
                 walletId: userId._id,
-                uniqueId: uniqueId
+                uniqueId: uniqueID
             })
 
             trans.save();
