@@ -84,7 +84,9 @@ router.post('/Transaction', auth, async (req, res) => {
     }
     
     const userId = await Wallet.findById(req.user.walletId)
-
+    
+    //Wallet.find({ wallet: req. })
+console.log(userId)
     axios.post(`${process.env.specificTrans}`, body, config)
         .then(response => {
             const trans = new Transaction({
