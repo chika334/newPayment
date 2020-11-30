@@ -106,19 +106,6 @@ router.post('/Transaction', auth, async (req, res) => {
                 walletId: userId._id
             })
 
-            //trans.save();
-            /*let transac = await Transaction.find({ requestId: tran })
-            //console.log(trans)
-            if (!transac) {
-                console.log("No trans with id")
-            } else {
-                res.status(200).json({
-                    transac,
-                    success: true,
-                    msg: "success"
-                })
-                return
-            }*/
             if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
                     transaction,

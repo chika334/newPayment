@@ -87,37 +87,108 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
 
-    axios.post(`${process.env.prepaidMeterPayment}`, body, config)
-        .then(res => {
-            console.log(res.data)
-            const electric = new Electric({
-                Customer_Name: res.data.content.Customer_Name, 
-                Meter_Number: meter, 
-                Address: res.data.content.Address, 
-                walletId: userId._id, 
-                type: res.data.content.type, 
-                date: res.data.transaction_date.date, 
-                response_description: res.data.response_description, 
-                amount: AmountInt, 
-                product_name: res.data.content.product_name 
-            })
-            electric.save();
-            if (res.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
-                throw err
-            } else {
-                res.status(200).json({
-                     msg: 'success'
+    if(userId.wallet === 0) {
+        res.status(400).json({
+            msg: "Wallet balance is low. please fund account"
+        })
+        return
+    } else {
+        axios.post(`${process.env.prepaidMeterPayment}`, body, config)
+            .then(res => {
+                console.log(res.data)
+                const electric = new Electric({
+                    Customer_Name: res.data.content.Customer_Name, 
+                    Meter_Number: meter, 
+                    Address: res.data.content.Address, 
+                    walletId: userId._id, 
+                    type: res.data.content.type, 
+                    date: res.data.transaction_date.date, 
+                    response_description: res.data.response_description, 
+                    amount: AmountInt, 
+                    product_name: res.data.content.product_name 
                 })
-            }
-         })
-         .catch(err => {
-            res.status(400).json({
-                msg: "Below minimum amount allowed"
-            })
-         })
-    })
+                electric.save();
+                if (res.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
+                    throw err
+                } else {
+                    res.status(200).json({
+                         msg: 'success'
+                    })
+                }
+             })
+             .catch(err => {
+                res.status(400).json({
+                    msg: "Below minimum amount allowed"
+                })
+             })
+        }
+})
+    
+router.post('/postpaidMeterPayment', auth, async (req, res) => {
+    const { name, AmountInt, meter, service, select, phone } = req.body
+    
+    const requestId = uuidv4();
+
+    const user = `${process.env.email_login}:${process.env.password_login}`
+    const base64 = Buffer.from(user).toString('base64');
+
+    const config = {
+        headers: {
+          "Authorization": `Basic ${base64}`
+        }
+      }
+
+    const body = {
+        request_id: requestId,
+        serviceID: service,
+        billerCode: meter,
+        variation_code: select,
+        amount: AmountInt,
+        phone: phone
+    }
+    
+    const userId = await Wallet.findById(req.user.walletId)
+    
+    if(userId.wallet === 0) {
+        res.status(400).json({
+            msg: "Wallet balance is low. please fund account"
+        })
+        return
+    } else {
+        axios.post(`${process.env.postpaidMeterPayment}`, body, config)
+            .then(res => {
+                console.log(res.data)
+                const electric = new Electric({
+                    Customer_Name: res.data.content.Customer_Name, 
+                    Meter_Number: meter, 
+                    Address: res.data.content.Address, 
+                    walletId: userId._id, 
+                    type: res.data.content.type, 
+                    date: res.data.transaction_date.date, 
+                    response_description: res.data.response_description, 
+                    amount: AmountInt,
+                    select: select,
+                    product_name: res.data.content.product_name 
+                })
+                electric.save();
+                if (res.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
+                    throw err
+                } else {
+                    res.status(200).json({
+                         msg: 'success'
+                    })
+                }
+             })
+             .catch(err => {
+                res.status(400).json({
+                    msg: "Below minimum amount allowed"
+                })
+             })
+        }   
+})
     
 
+// prepaid single query
 router.post('/DataTransaction', auth, async (req, res) => {
     const { AmountInt, service, phone, variation } = req.body
     const requestId = uuidv4();
@@ -158,9 +229,25 @@ router.post('/DataTransaction', auth, async (req, res) => {
                 walletId: userId._id,
                 uniqueId: uniqueId
             })
-            trans.save();
+            //trans.save();
+            if(response.data.content.transactionId == response.data.content.transactionId) {
+                res.status(200).json({
+                    transaction,
+                    success: true,
+                    msg: "success"
+                })
+                return
+            } else {
+                const transaction = new Transaction({
+                    status: response.data.response_description
+                })
+                transaction.save();
+                throw err
+            }
         })
-        .catch(err => console.log(err))
+        .catch(err => res.status(400).json({
+            msg: "Error occured while querying transaction"
+        })
 })
 
     

@@ -10,6 +10,7 @@ const ElectricSchema = new mongoose.Schema({
     response_description: String,
     amount: String,
     product_name: String,
+    select: String,
     transactionID: String
 }, { timestamp: true })
 
