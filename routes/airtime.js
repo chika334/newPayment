@@ -93,10 +93,9 @@ router.post('/Transaction', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    //Wallet.find({ wallet: req. })
     axios.post(`${process.env.specificTrans}`, body, config)
         .then(response => {
-            const trans = new Transaction({
+            /*const trans = new Transaction({
                 amount: response.data.content.transactions.amount,
                 requestId: req.body.trans,
                 product_name: response.data.content.transactions.type,
@@ -107,7 +106,9 @@ router.post('/Transaction', auth, async (req, res) => {
                 walletId: userId._id
             })
 
-            trans.save();
+            trans.save();*/
+            const userTran = Transaction.find({ requestId: tran })
+            console.log(userTran)
             if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
                     trans,
