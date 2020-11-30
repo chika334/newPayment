@@ -93,7 +93,7 @@ router.post('/Transaction', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    async axios.post(`${process.env.specificTrans}`, body, config)
+    return await axios.post(`${process.env.specificTrans}`, body, config)
         .then(response => {
             /*const trans = new Transaction({
                 amount: response.data.content.transactions.amount,
