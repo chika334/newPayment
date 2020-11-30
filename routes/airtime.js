@@ -117,14 +117,18 @@ router.post('/Transaction', auth, async (req, res) => {
                 })
                 return
             } else {
+                const trans = new Transaction({
+                    status: response.data.response_description
+                })
+                trans.save();
                 throw err
             }
         })
         .catch((err, response) => {
-            const trans = new Transaction({
+            /*const trans = new Transaction({
                 status: response.data.response_description
             })
-            trans.save();
+            trans.save();*/
             res.status(400).json({
                 msg: "Error occured while querying transaction"
             })
