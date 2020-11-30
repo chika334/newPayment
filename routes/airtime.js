@@ -111,7 +111,15 @@ router.post('/Transaction', auth, async (req, res) => {
                 throw err
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => {
+            const trans = new Transaction({
+                status: response.data.response_description
+            })
+            trans.save();
+            res.status(400).json({
+                msg: "Error occured while querying transaction"
+            })
+        }))
 })
 
 module.exports = router;
