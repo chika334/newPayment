@@ -120,7 +120,7 @@ router.post('/Transaction', auth, async (req, res) => {
                 throw err
             }
         })
-        .catch(err => {
+        .catch((err, response) => {
             const trans = new Transaction({
                 status: response.data.response_description
             })
