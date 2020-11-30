@@ -34,7 +34,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
     
     axios.post(process.env.verifyMeterNumber, body, config)
         .then(response => {
-            const smartCard = new Smartcard({
+            const smartCards = new Smartcard({
                 Customer_Name: response.data.content.Customer_Name,
                 Smartcard_Number: smartCard,
                 Customer_ID: response.data.content.Customer_ID,
@@ -42,7 +42,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
                 walletId: userId._id,
                 select: select
             })
-            smartCard.save();
+            smartCards.save();
             //if(response.data.content.Customer_Name == response.data.content.Customer_Name) {
                 return res.status(200).json({
                     smartCard,
