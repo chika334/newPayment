@@ -38,10 +38,11 @@ router.post('/creditTransaction', auth, async (req, res) => {
     }
     
     const userId = await Wallet.findById(req.user.walletId)
+    console.log(userId)
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(response => {
-            const pay = new Pay({
+            const trans = new Transaction({
                 amount: response.data.amount,
                 requestId: response.data.requestId,
                 product_name: response.data.content.transactions.product_name,
@@ -52,10 +53,10 @@ router.post('/creditTransaction', auth, async (req, res) => {
                 walletId: userId._id,
             })
 
-            pay.save();
+            trans.save();
             if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
-                    pay,
+                    trans,
                     success: true,
                     msg: "success"
                 })
@@ -86,7 +87,6 @@ router.post('/Transaction', auth, async (req, res) => {
     const userId = await Wallet.findById(req.user.walletId)
     
     //Wallet.find({ wallet: req. })
-console.log(userId)
     axios.post(`${process.env.specificTrans}`, body, config)
         .then(response => {
             const trans = new Transaction({
