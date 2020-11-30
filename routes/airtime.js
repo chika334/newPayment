@@ -107,7 +107,7 @@ router.post('/Transaction', auth, async (req, res) => {
             })
 
             trans.save();*/
-            const trans = Transaction.find({ requestId: tran })
+            const trans = await Transaction.find({ requestId: tran })
             //console.log(trans)
             if (!trans) {
                 console.log("No trans with id")
