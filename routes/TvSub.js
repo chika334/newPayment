@@ -8,8 +8,8 @@ const TvSub = require("../model/payTvSub")
 const Smartcard = require("../model/smartCard")
 
 router.get('/getverifySmartcardNumber', auth, async (req, res) => {
-    const verify = await Verify.find({ walletId: req.user.walletId })
-    res.json(verify)
+    const smartCards = await Smartcard.find({ walletId: req.user.walletId })
+    res.json(smartCards)
 })
 
 router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
@@ -44,16 +44,15 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
             })
             smartCards.save();
             if(response.data.content.Customer_Name == response.data.content.Customer_Name) {
-                return res.status(200).json({
-                    smartCard,
+                res.status(200).json({
+                    smartCards,
                     success: true,
                     msg: "success"
                 })
-                
+                return
             } else {
                 throw err
             }
-            console.log(response.data)
         })
         .catch(err => {
             //console.log(err)
