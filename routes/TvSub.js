@@ -7,7 +7,7 @@ const { v4: uuidv4 } = require('uuid');
 const TvSub = require("../model/payTvSub")
 const Smartcard = require("../model/smartCard")
 
-router.get('/verifyNumber', auth, async (req, res) => {
+router.get('/getverifySmartcardNumber', auth, async (req, res) => {
     const verify = await Verify.find({ walletId: req.user.walletId })
     res.json(verify)
 })
@@ -43,24 +43,24 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
                 select: select
             })
             smartCards.save();
-            //if(response.data.content.Customer_Name == response.data.content.Customer_Name) {
+            if(response.data.content.Customer_Name == response.data.content.Customer_Name) {
                 return res.status(200).json({
                     smartCard,
                     success: true,
                     msg: "success"
                 })
                 
-            /*} else {
+            } else {
                 throw err
-            }*/
+            }
             console.log(response.data)
         })
         .catch(err => {
-            console.log(err)
-            /*res.status(400).json({
+            //console.log(err)
+            res.status(400).json({
                 success: false,
                 msg: "Invalid Smartcard Number. Please check and Try Again"
-            })*/
+            })
         })
 })
 
