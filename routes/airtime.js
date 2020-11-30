@@ -48,7 +48,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
     } else {
         axios.post(`${process.env.airtime}`, body, config)
         .then(response => {
-            const trans = new Transaction({
+            const transaction = new Transaction({
                 amount: response.data.amount,
                 requestId: response.data.requestId,
                 product_name: response.data.content.transactions.product_name,
@@ -59,10 +59,10 @@ router.post('/creditTransaction', auth, async (req, res) => {
                 walletId: userId._id,
             })
 
-            trans.save();
+            transaction.save();
             if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
-                    trans,
+                    transaction,
                     success: true,
                     msg: "success"
                 })
@@ -95,7 +95,7 @@ router.post('/Transaction', auth, async (req, res) => {
     
     axios.post(`${process.env.specificTrans}`, body, config)
         .then(async response => {
-            let trans = new Transaction({
+            let transaction = new Transaction({
                 amount: response.data.content.transactions.amount,
                 requestId: req.body.trans,
                 product_name: response.data.content.transactions.type,
@@ -107,7 +107,7 @@ router.post('/Transaction', auth, async (req, res) => {
             })
 
             //trans.save();
-            let transac = await Transaction.find({ requestId: tran })
+            /*let transac = await Transaction.find({ requestId: tran })
             //console.log(trans)
             if (!transac) {
                 console.log("No trans with id")
@@ -118,21 +118,21 @@ router.post('/Transaction', auth, async (req, res) => {
                     msg: "success"
                 })
                 return
-            }
-            /*if(response.data.content.transactionId == response.data.content.transactionId) {
+            }*/
+            if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
-                    trans,
+                    transaction,
                     success: true,
                     msg: "success"
                 })
                 return
             } else {
-                const trans = new Transaction({
+                const transaction = new Transaction({
                     status: response.data.response_description
                 })
-                trans.save();
+                transaction.save();
                 throw err
-            }*/
+            }
         })
         .catch(err => {
             res.status(400).json({
