@@ -40,7 +40,13 @@ router.post('/creditTransaction', auth, async (req, res) => {
     const userId = await Wallet.findById(req.user.walletId)
     console.log(userId)
 
-    axios.post(`${process.env.airtime}`, body, config)
+    if(userId.wallet === 0) {
+        res.status(400).json({
+            msg: "Error occured while querying transaction"
+        })
+        return
+    } else {
+        axios.post(`${process.env.airtime}`, body, config)
         .then(response => {
             const trans = new Transaction({
                 amount: response.data.amount,
@@ -66,6 +72,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
             }
         })
         .catch(err => console.log(err))
+    }
 })
 
 router.post('/Transaction', auth, async (req, res) => {
