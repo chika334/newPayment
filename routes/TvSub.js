@@ -53,7 +53,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
             /*} else {
                 throw err
             }*/
-            //console.log(response.data)
+            console.log(response.data)
         })
         .catch(err => {
             //console.log(err)
