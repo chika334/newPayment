@@ -67,7 +67,7 @@ router.post('/DataTransaction', auth, async (req, res) => {
             })
             .catch(err => res.status(400).json({
                 msg: "Error occured while querying transaction"
-            })
+            }))
        }
 })
 
