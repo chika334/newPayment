@@ -107,9 +107,19 @@ router.post('/Transaction', auth, async (req, res) => {
             })
 
             trans.save();*/
-            const userTran = Transaction.find({ requestId: tran })
-            console.log(userTran)
-            if(response.data.content.transactionId == response.data.content.transactionId) {
+            const trans = Transaction.find({ requestId: tran })
+            //console.log(trans)
+            if (!trans) {
+                console.log("No trans with id")
+            } else {
+                res.status(200).json({
+                    trans,
+                    success: true,
+                    msg: "success"
+                })
+                return
+            }
+            /*if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
                     trans,
                     success: true,
@@ -122,13 +132,9 @@ router.post('/Transaction', auth, async (req, res) => {
                 })
                 trans.save();
                 throw err
-            }
+            }*/
         })
-        .catch((err, response) => {
-            /*const trans = new Transaction({
-                status: response.data.response_description
-            })
-            trans.save();*/
+        .catch(err => {
             res.status(400).json({
                 msg: "Error occured while querying transaction"
             })
