@@ -43,7 +43,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
                 select: select
             })
             smartCard.save();
-            if(response.data.content.Customer_Name != '') {
+            if(response.data.content.Customer_Name == response.data.content.Customer_Name) {
                 res.status(200).json({
                     smartCard,
                     success: true,
