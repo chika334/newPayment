@@ -87,33 +87,42 @@ router.post('/payTvBill', auth, async (req, res, err) => {
     
     const userId = await Wallet.findById(req.user.walletId)
 
-    axios.post(`${process.env.PAYTVBILL}`, body, config)
-        .then(response => {
-            //console.log(res.data)
-            /*const tvsub = new TvSub({
-                smartCard: smartCard, 
-                walletId: userId._id, 
-                type: response.data.content.type, 
-                date: response.data.transaction_date.date, 
-                response_description: response.data.response_description, 
-                amount: AmountInt, 
-                product_name: response.data.content.product_name 
-            })
-            tvsub.save();
-            if (response.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
-                throw err
-            } else {
-                res.status(200).json({
-                     msg: 'success'
+    if(userId.wallet < AmountInt) {
+        res.status(400).json({
+            msg: "Error occured while querying transaction"
+        })
+        return
+    } else {
+        axios.post(`${process.env.PAYTVBILL}`, body, config)
+            .then(response => {
+                //console.log(res.data)
+                const transaction = new Transaction({
+                    smartCard: smartCard, 
+                    walletId: userId._id, 
+                    type: response.data.content.type, 
+                    date: response.data.transaction_date.date, 
+                    response_description: response.data.response_description, 
+                    amount: AmountInt, 
+                    product_name: response.data.content.product_name 
                 })
-            }*/
-         })
-         .catch(err => {
-            console.log(err)
-            /*res.status(400).json({
-                msg: "Below minimum amount allowed"
-            })*/
-         })
-    })
+                transaction.save();
+                if (response.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
+                    throw err
+                } else {
+                    res.status(200).json({
+                        transaction,
+                        success: true,
+                        msg: 'success'
+                    })
+                }
+             })
+             .catch(err => {
+                //console.log(err)
+                res.status(400).json({
+                    msg: "Below minimum amount allowed"
+                })
+             })
+        }
+  })
     
 module.exports = router;

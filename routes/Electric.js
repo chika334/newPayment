@@ -87,7 +87,7 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
 
-    if(userId.wallet === 0) {
+    if(userId.wallet < AmountInt) {
         res.status(400).json({
             msg: "Wallet balance is low. please fund account"
         })
@@ -149,7 +149,7 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    if(userId.wallet === 0) {
+    if(userId.wallet < AmountInt) {
         res.status(400).json({
             msg: "Wallet balance is low. please fund account"
         })

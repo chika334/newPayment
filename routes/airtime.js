@@ -40,7 +40,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
     const userId = await Wallet.findById(req.user.walletId)
     console.log(userId)
 
-    if(userId.wallet === 0) {
+    if(userId.wallet < AmountInt) {
         res.status(400).json({
             msg: "Error occured while querying transaction"
         })
