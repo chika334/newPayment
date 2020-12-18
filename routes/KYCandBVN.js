@@ -49,30 +49,30 @@ router.post("/kyc-bvn", (req, res) => {
 
 // const uploaded = uploads.fields([{ name: 'caccertificate', maxCount: 1}, { name: 'idcard', maxCount: 1}, { name: 'bill', maxCount: 1}, { name: 'passport', maxCount: 1}])
 
-router.post("/companyUpdate", (req, res) => {
-    const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
-    //const { caccertificate, idcard, passport, bill } = req.files
+router.post("/companyUpdate", auth, (req, res) => {
+	const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
+	//const { caccertificate, idcard, passport, bill } = req.files
+	
+	console.log(user_id)
+	User.findById(user_id, function (err, user) {
+		if (err || !user) {
+				return res.status(400).json({
+						msg: "User does not exist"
+				})
+		}
 		
-		console.log(user_id)
-    User.findById(user_id, function (err, user) {
-        if (err || !user) {
-            return res.status(400).json({
-                msg: "User does not exist"
-            })
+		console.log(err)
+
+		user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
+				if (err) {
+						return res.json({ error: console.log(err)})
+				} else {
+					res.status(200).json({
+						msg: `Thanks for updating your company profile`
+					});
 				}
-				
-				console.log(err)
-    
-        user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
-            if (err) {
-               return res.json({ error: console.log(err)})
-           } else {
-             res.status(200).json({
-               msg: `Thanks for updating your company profile`
-             });
-           }
-        })
-    })
+		})
+	})
 })
 
 // router.updateOne('/companyUpdate', (req, res) => {
