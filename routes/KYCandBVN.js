@@ -52,7 +52,8 @@ router.post("/kyc-bvn", (req, res) => {
 router.post("/companyUpdate", (req, res) => {
     const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
     //const { caccertificate, idcard, passport, bill } = req.files
-    
+		
+		console.log(user_id)
     User.findById(user_id, function (err, user) {
         if (err || !user) {
             return res.status(400).json({
@@ -60,8 +61,7 @@ router.post("/companyUpdate", (req, res) => {
             })
 				}
 				
-				console.log(user)
-				console.log(user_id)
+				console.log(err)
     
         user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
             if (err) {
