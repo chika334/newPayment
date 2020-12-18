@@ -29,6 +29,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
 		serviceID: service,
 		type: select
 	}
+	console.log(body)
 	
 	const userId = await Wallet.findById(req.user.walletId)
 	
