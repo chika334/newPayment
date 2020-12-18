@@ -14,6 +14,7 @@ router.get('/verifyNumber', auth, async (req, res) => {
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
 	const { meter, service, select, transactionId } = req.body
+	console.log(req.body)
 	
 	const user = `${process.env.email_login}:${process.env.password_login}`
 	const base64 = Buffer.from(user).toString('base64');
