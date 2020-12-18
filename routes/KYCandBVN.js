@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const User = require("../model/User")
+const auth = require('../middleware/auth')
 const multer = require('multer')
 
 router.post("/kyc-bvn", (req, res) => {
