@@ -5,6 +5,19 @@ const auth = require("../middleware/auth.js")
 const bcrypt = require("bcrypt")
 const Wallet = require('../model/Wallet')
 
+router.get('/getUserDetail/', async (req, res) => {
+  var token = req.headers['x-auth-token'];
+  if(!token) return res.status(401).send({ auth: false, msg: "No token provided" })
+
+  jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+    if (err) return res.status(500).send({ auth: false, msg: "Failed to authenticate token." })
+
+    res.status(200).send(decoded)
+  })
+	// const user = await User.findById(req.user._id).select('-password')
+	// res.json(user)
+})
+
 router.get('/getUser', auth, async (req, res) => {
 	const user = await User.findById(req.user._id).select('-password')
 	res.json(user)
