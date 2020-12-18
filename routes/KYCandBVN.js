@@ -50,11 +50,11 @@ router.post("/kyc-bvn", (req, res) => {
 
 // const uploaded = uploads.fields([{ name: 'caccertificate', maxCount: 1}, { name: 'idcard', maxCount: 1}, { name: 'bill', maxCount: 1}, { name: 'passport', maxCount: 1}])
 
-router.post("/companyUpdate", auth, (req, res) => {
+router.post("/companyUpdate", auth, async (req, res) => {
 	const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
 	//const { caccertificate, idcard, passport, bill } = req.files
 	
-	const userId = await Wallet.findById(req.user._id)
+	const userId = await User.findById(req.user._id)
 
 	console.log(userId)
 	// User.findById(user_id, function (err, user) {
