@@ -12,23 +12,23 @@ router.get('/getWallet', auth, async (req, res) => {
 router.post('/addFunds', auth, async (req, res) => {
     const { AmountInt } = req.body
     if (AmountInt == null) {
-        res.status(404).json({
-            msg: 'Input an amount'
-        })
-        return
+      res.status(404).json({
+          msg: 'Input an amount'
+      })
+      return
     }
 
     await Wallet.findById({ _id: req.user.walletId }, (err, wallets) => {
-        if (err) throw err;
-        return wallets.updateOne({ wallet: wallets.wallet + AmountInt }, (err, success) => {
-            if (err) {
-              return res.json({ error: console.log(err)})
-            } else {
-              res.status(200).json({
-                msg: `Account Credited`
-              });
-            }
-        })
+      if (err) throw err;
+      return wallets.updateOne({ wallet: wallets.wallet + AmountInt }, (err, success) => {
+        if (err) {
+          return res.json({ error: console.log(err)})
+        } else {
+          res.status(200).json({
+            msg: `Account Credited`
+          });
+        }
+      })
     })
 })
 

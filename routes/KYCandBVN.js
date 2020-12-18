@@ -5,29 +5,29 @@ const auth = require('../middleware/auth')
 const multer = require('multer')
 
 router.post("/kyc-bvn", (req, res) => {
-    const { _id, firstname, middlename, lastname, birthday, bvn, bvnphone } = req.body
-    if (firstname === "" || lastname === "" || middlename === "" || birthday === "" || bvn === "" || bvnphone === "") {
-        return res.status(400).json({
-            msg: "Input all fields"
-        })
-    }
-    User.findById(_id, function (err, user) {
-        if (err || !user) {
-            return res.status(400).json({
-                msg: "User does not exist"
-            })
-        }
-        
-        user.updateOne({ firstname, middlename, lastname, birthday, bvn, bvnphone }, (err, success) => {
-            if (err) {
-               return res.json({ error: console.log(err)})
-           } else {
-             res.status(200).json({
-               msg: `Thanks for updating your profile`
-             });
-           }
-        })
-    })
+	const { _id, firstname, middlename, lastname, birthday, bvn, bvnphone } = req.body
+	if (firstname === "" || lastname === "" || middlename === "" || birthday === "" || bvn === "" || bvnphone === "") {
+			return res.status(400).json({
+				msg: "Input all fields"
+			})
+	}
+	User.findById(_id, function (err, user) {
+		if (err || !user) {
+				return res.status(400).json({
+					msg: "User does not exist"
+				})
+		}
+		
+		user.updateOne({ firstname, middlename, lastname, birthday, bvn, bvnphone }, (err, success) => {
+			if (err) {
+				return res.json({ error: console.log(err)})
+			} else {
+				res.status(200).json({
+					msg: `Thanks for updating your profile`
+				});
+			}
+		})
+	})
 })
 
 // let Storage = multer.diskStorage({
@@ -54,26 +54,28 @@ router.post("/companyUpdate", auth, (req, res) => {
 	const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
 	//const { caccertificate, idcard, passport, bill } = req.files
 	
-	console.log(user_id)
-	User.findById(user_id, function (err, user) {
-		if (err || !user) {
-				return res.status(400).json({
-						msg: "User does not exist"
-				})
-		}
-		
-		console.log(err)
+	const userId = await Wallet.findById(req.user._id)
 
-		user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
-				if (err) {
-						return res.json({ error: console.log(err)})
-				} else {
-					res.status(200).json({
-						msg: `Thanks for updating your company profile`
-					});
-				}
-		})
-	})
+	console.log(userId)
+	// User.findById(user_id, function (err, user) {
+	// 	if (err || !user) {
+	// 			return res.status(400).json({
+	// 					msg: "User does not exist"
+	// 			})
+	// 	}
+		
+	// 	console.log(err)
+
+	// 	user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
+	// 			if (err) {
+	// 					return res.json({ error: console.log(err)})
+	// 			} else {
+	// 				res.status(200).json({
+	// 					msg: `Thanks for updating your company profile`
+	// 				});
+	// 			}
+	// 	})
+	// })
 })
 
 // router.updateOne('/companyUpdate', (req, res) => {
