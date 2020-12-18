@@ -58,7 +58,10 @@ router.post("/companyUpdate", (req, res) => {
             return res.status(400).json({
                 msg: "User does not exist"
             })
-        }
+				}
+				
+				console.log(user)
+				console.log(user_id)
     
         user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
             if (err) {
