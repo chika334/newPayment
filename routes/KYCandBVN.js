@@ -6,39 +6,39 @@ const multer = require('multer')
 router.post("/kyc-bvn", (req, res) => {
     const { _id, firstname, middlename, lastname, birthday, bvn, bvnphone } = req.body
     if (firstname === "" || lastname === "" || middlename === "" || birthday === "" || bvn === "" || bvnphone === "") {
-			return res.status(400).json({
-					msg: "Input all fields"
-			})
+        return res.status(400).json({
+            msg: "Input all fields"
+        })
     }
     User.findOneAndUpdate(_id, { firstname, middlename, lastname, birthday, bvn, bvnphone }, function (err, user) {
-			if (err || !user) {
-				return res.status(400).json({
-				msg: "User does not exist"
-			})
-			} else {
-				res.status(200).json({
-					msg: `Thanks for updating your profile`
-				});
-			}
+        if (err || !user) {
+           return res.status(400).json({
+            msg: "User does not exist"
+        })
+       } else {
+         res.status(200).json({
+           msg: `Thanks for updating your profile`
+         });
+       }
     })
 })
 
 let Storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, 'uploads/')
-	},
-	filename: function (req, file, cb) {
-		cb(null, `${Date.now()}_${file.originalname}`)
-	},
-	fileFilter: (req, file, cb) => {
-		const ext = path.extname(file.originalname)
-		//console.log(ext)
-		if (!(ext == '.jpg' || ext == '.png' || ext == '.jpeg')) {
-			return cb(new Error('only jpg, png is allowed'), false);
-		}
-		cb(null, true)
-	}
-})
+    destination: function (req, file, cb) {
+      cb(null, 'uploads/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, `${Date.now()}_${file.originalname}`)
+    },
+    fileFilter: (req, file, cb) => {
+      const ext = path.extname(file.originalname)
+      //console.log(ext)
+      if (!(ext == '.jpg' || ext == '.png' || ext == '.jpeg')) {
+        return cb(new Error('only jpg, png, mp4 is allowed'), false);
+      }
+      cb(null, true)
+    }
+  })
 
 const uploads = multer({ storage: Storage })
 
@@ -48,16 +48,16 @@ router.post("/companyUpdate", uploaded, (req, res) => {
     const { user_id, companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk } = req.body
     const { caccertificate, idcard, passport, bill } = req.files
     
-    User.findOneAndUpdate(user_id, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk, caccertificate, idcard, passport, bill }, function (err, user) {
-			if (err || !user) {
-				return res.status(400).json({
-				msg: "User does not exist"
-			})
-			} else {
-				res.status(200).json({
-					msg: `Thanks for updating your profile`
-				});
-			}
+    User.findOneAndUpdate(user_id, { companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, function (err, user) {
+        if (err || !user) {
+           return res.status(400).json({
+            msg: "User does not exist"
+        })
+       } else {
+         res.status(200).json({
+           msg: `Thanks for updating your profile`
+         });
+       }
     })
 })
 
