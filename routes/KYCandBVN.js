@@ -72,4 +72,8 @@ router.post("/companyUpdate", (req, res) => {
     })
 })
 
+// router.updateOne('/companyUpdate', (req, res) => {
+
+// })
+
 module.exports = router
