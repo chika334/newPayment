@@ -42,8 +42,9 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
 				walletId: userId._id,
 				select: select
 			})
-			verify.save();
+			
 			if(response.data.content.WrongBillersCode == false) {
+				verify.save();
 				res.status(200).json({
 					verify,
 					success: true,
