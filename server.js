@@ -36,9 +36,7 @@ app.use('/api', TvSub)
 
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
   .then(() => console.log("Connected to DB"))
-  .catch(err => console.log(err))
-
-app.use("/uploads", express.static(path.join(__dirname, 'uploads')));    
+  .catch(err => console.log(err))    
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => {
