@@ -14,7 +14,6 @@ router.get('/verifyNumber', auth, async (req, res) => {
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
 	const { meter, service, select, transactionId } = req.body
-	//console.log(req.body)
 	
 	const user = `${process.env.email_login}:${process.env.password_login}`
 	const base64 = Buffer.from(user).toString('base64');
@@ -30,8 +29,6 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
 		serviceID: service,
 		type: select
 	}
-
-	console.log(body);
 	
 	const userId = await Wallet.findById(req.user.walletId)
 	
@@ -45,9 +42,8 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
 				walletId: userId._id,
 				select: select
 			})
-			
+			verify.save();
 			if(response.data.content.WrongBillersCode == false) {
-				verify.save();
 				res.status(200).json({
 					verify,
 					success: true,
