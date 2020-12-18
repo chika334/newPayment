@@ -56,26 +56,26 @@ router.post("/companyUpdate", auth, async (req, res) => {
 	
 	const userId = await User.findById(req.user._id)
 
-	console.log(userId)
-	// User.findById(user_id, function (err, user) {
-	// 	if (err || !user) {
-	// 			return res.status(400).json({
-	// 					msg: "User does not exist"
-	// 			})
-	// 	}
+	//console.log(userId)
+	User.findById(userId._id, function (err, user) {
+		if (err || !user) {
+			return res.status(400).json({
+					msg: "User does not exist"
+			})
+		}
 		
-	// 	console.log(err)
+		console.log(err)
 
-	// 	user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
-	// 			if (err) {
-	// 					return res.json({ error: console.log(err)})
-	// 			} else {
-	// 				res.status(200).json({
-	// 					msg: `Thanks for updating your company profile`
-	// 				});
-	// 			}
-	// 	})
-	// })
+		user.updateOne({ companyname, companyaddress, homeaddress, alternatephone, localgov, State, identity, talk }, (err, success) => {
+			if (err) {
+				return res.json({ error: console.log(err)})
+			} else {
+				res.status(200).json({
+					msg: `Thanks for updating your company profile`
+				});
+			}
+		})
+	})
 })
 
 // router.updateOne('/companyUpdate', (req, res) => {
