@@ -30,9 +30,9 @@ function verifyToken(req, res, next) {
   }
 }
 
-router.get('/me', (req, res, next) => {
-  var token = req.headers['x-auth-token'];
-  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+router.get('/auth/me', (req, res, next) => {
+  var token = req.header('x-auth-token')
+  if (!token) return res.status(401).send({ auth: false, msg: 'No token provided.' });
 
   jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
