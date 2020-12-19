@@ -19,7 +19,7 @@ router.get('/auth/me', (req, res) => {
 
       const { _id, name, email } = user
       
-      res.status(200).send({ user: { _id, name, email } });
+      res.status(200).send({ user });
     });
   });
 })
