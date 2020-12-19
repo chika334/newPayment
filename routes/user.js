@@ -27,7 +27,7 @@ router.get('/auth/me', (req, res) => {
     
     // res.status(200).send(decoded);
     console.log(decoded)
-    User.findById(decoded.id, function (err, user) {
+    User.findById(decoded._id, function (err, user) {
       if (err) return res.status(500).send("There was a problem finding the user.");
       if (!user) return res.status(404).send("No user found.");
       
@@ -35,7 +35,7 @@ router.get('/auth/me', (req, res) => {
     });
   });
 })
- 
+
 router.get('/getUser', auth, async (req, res) => {
 	const user = await User.findById(req.user._id).select('-password')
 	res.json(user)
