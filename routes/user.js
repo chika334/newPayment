@@ -110,7 +110,7 @@ router.post('/updatePassword', async(req, res) => {
       })
     }
     res.status(200).json({
-        msg: email + " your password has been changed."
+      msg: email + " your password has been changed."
     })
   })
   if (!user) return res.status(400).json({ msg: 'User not found' })
