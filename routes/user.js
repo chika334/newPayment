@@ -18,33 +18,20 @@ const jwt = require("jsonwebtoken")
 //   });
 // });
 
-function verifyToken(req, res, next) {
-  const bearerHeader = req.Header['x-auth-token']
-
-  if(bearerHeader) {
-    const bearer = bearerHeader.split(' ')
-    const bearerToken = bearer[1];
-    req.token = bearerToken;
-    next();
-  } else {
-    res.sendStatus(403)
-  }
-}
-
-router.get('/auth/me', (req, res, next) => {
+router.get('/auth/me', (req, res) => {
   var token = req.header('x-auth-token')
   if (!token) return res.status(401).send({ auth: false, msg: 'No token provided.' });
 
   jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     
-    // res.status(200).send(decoded);
-    User.findById(decoded.id, function (err, user) {
-      if (err) return res.status(500).send("There was a problem finding the user.");
-      if (!user) return res.status(404).send("No user found.");
+    res.status(200).send(decoded);
+    // User.findById(decoded.id, function (err, user) {
+    //   if (err) return res.status(500).send("There was a problem finding the user.");
+    //   if (!user) return res.status(404).send("No user found.");
       
-      res.status(200).send(user);
-    });
+    //   res.status(200).send(user);
+    // });
   });
 })
  
