@@ -4,7 +4,8 @@ const router = express.Router()
 const auth = require("../middleware/auth.js")
 const bcrypt = require("bcrypt")
 const Wallet = require('../model/Wallet')
-const { request } = require('express')
+const jwt = require("jsonwebtoken")
+
 
 // router.get('/register/me', function(req, res) {
 //   var token = req.headers['x-auth-token'];
