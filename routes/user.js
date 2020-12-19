@@ -6,18 +6,6 @@ const bcrypt = require("bcrypt")
 const Wallet = require('../model/Wallet')
 const jwt = require("jsonwebtoken")
 
-
-// router.get('/register/me', function(req, res) {
-//   var token = req.headers['x-auth-token'];
-//   if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
-  
-//   jwt.verify(token, config.secret, function(err, decoded) {
-//     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
-    
-//     res.status(200).send(decoded);
-//   });
-// });
-
 router.get('/auth/me', (req, res) => {
   var token = req.header('x-auth-token')
   if (!token) return res.status(401).send({ auth: false, msg: 'No token provided.' });
@@ -25,13 +13,11 @@ router.get('/auth/me', (req, res) => {
   jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
     if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
     
-    // res.status(200).send(decoded);
-    console.log(decoded)
     User.findById(decoded._id, function (err, user) {
       if (err) return res.status(500).send("There was a problem finding the user.");
       if (!user) return res.status(404).send("No user found.");
       
-      res.status(200).send(user);
+      res.status(200).send(user.select('-password -walletId'));
     });
   });
 })
