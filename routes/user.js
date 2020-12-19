@@ -4,6 +4,7 @@ const router = express.Router()
 const auth = require("../middleware/auth.js")
 const bcrypt = require("bcrypt")
 const Wallet = require('../model/Wallet')
+const { request } = require('express')
 
 // router.get('/register/me', function(req, res) {
 //   var token = req.headers['x-auth-token'];
@@ -16,17 +17,28 @@ const Wallet = require('../model/Wallet')
 //   });
 // });
 
-router.get('/me', function(req, res, next) {
-  const authHeader = req.headers['authorization']
-  const token = authHeader && authHeader.split(' ')[1]
-  if (token == null) return res.sendStatus(401) // if there isn't any token
+function verifyToken(req, res, next) {
+  const bearerHeader = req.Header['x-auth-token']
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    console.log(err)
-    if (err) return res.sendStatus(403)
-    req.user = user
-    next() // pass the execution off to whatever request the client intended
-  })
+  if(bearerHeader) {
+    const bearer = bearerHeader.split(' ')
+    const bearerToken = bearer[1];
+    req.token = bearerToken;
+    next();
+  } else {
+    res.sendStatus(403)
+  }
+}
+
+router.get('/me', verifyToken, (req, res, next) => {
+  var token = req.headers['x-auth-token'];
+  if (!token) return res.status(401).send({ auth: false, message: 'No token provided.' });
+
+  jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
+    if (err) return res.status(500).send({ auth: false, message: 'Failed to authenticate token.' });
+    
+    res.status(200).send(decoded);
+  });
 })
  
 router.get('/getUser', auth, async (req, res) => {
