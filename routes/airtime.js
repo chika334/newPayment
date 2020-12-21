@@ -7,10 +7,10 @@ const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 
-router.get('/getPayment', auth, async (req, res) => {
+/*router.get('/getPayment', auth, async (req, res) => {
     const credit = await Pay.find({ walletId: req.user.walletId })
     res.status(200).json(credit)
-})
+})*/
 
 router.get('/getTransaction', auth, async (req, res) => {
     const transaction = await Transaction.find({ walletId: req.user.walletId })
@@ -40,12 +40,12 @@ router.post('/creditTransaction', auth, async (req, res) => {
     const userId = await Wallet.findById(req.user.walletId)
     console.log(userId)
 
-    if(userId.wallet < AmountInt) {
+    /*if(userId.wallet < AmountInt) {
         res.status(400).json({
             msg: "Error occured while querying transaction"
         })
         return
-    } else {
+    } else {*/
         axios.post(`${process.env.airtime}`, body, config)
         .then(response => {
             const transaction = new Transaction({
@@ -62,9 +62,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
             transaction.save();
             if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
-                    transaction,
-                    success: true,
-                    msg: "success"
+                    transaction
                 })
                 return
             } else {
@@ -72,7 +70,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
             }
         })
         .catch(err => console.log(err))
-    }
+   // }
 })
 
 router.post('/Transaction', auth, async (req, res) => {
@@ -108,16 +106,14 @@ router.post('/Transaction', auth, async (req, res) => {
 
             if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
-                    transaction,
-                    success: true,
-                    msg: "success"
+                    transaction
                 })
                 return
             } else {
-                const transaction = new Transaction({
+                /*const transaction = new Transaction({
                     status: response.data.response_description
                 })
-                transaction.save();
+                transaction.save();*/
                 throw err
             }
         })

@@ -37,12 +37,12 @@ router.post('/DataTransaction', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
     
-    if(userId.wallet < AmountInt) {
+    /*if(userId.wallet < AmountInt) {
         res.status(400).json({
             msg: "Wallet balance is low. please fund account"
         })
         return
-    } else {
+    } else {*/
         axios.post(`${process.env.data_API}`, body, config)
             .then(res => {
                 const data = new Data({
@@ -68,7 +68,7 @@ router.post('/DataTransaction', auth, async (req, res) => {
             .catch(err => res.status(400).json({
                 msg: "Error occured while querying transaction"
             }))
-       }
+      // }
 })
 
 // single query
@@ -93,12 +93,12 @@ router.post('/singleTransaction', auth, async (req, res) => {
     
     const userId = await Wallet.findById(req.user.walletId)
 
-    if(userId.wallet < AmountInt) {
+    /*if(userId.wallet < AmountInt) {
         res.status(400).json({
             msg: "Wallet balance is low. please fund account"
         })
         return
-    } else {
+    } else {*/
         axios.post(`${process.env.dataSingle}`, body, config)
             .then(res => {
                 const transaction = new Transaction({
@@ -131,7 +131,7 @@ router.post('/singleTransaction', auth, async (req, res) => {
             .catch(err => res.status(400).json({
                 msg: "Error occured while querying transaction"
             }))
-     }
+    // }
 })
 
 
