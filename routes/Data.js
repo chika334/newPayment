@@ -101,7 +101,7 @@ router.post('/singleTransaction', auth, async (req, res) => {
     } else {*/
         axios.post(`${process.env.dataSingle}`, body, config)
             .then(res => {
-                const transaction = new Transaction({
+                const data = new Data({
                     amount: response.data.content.transactions.amount,
                     requestId: req.body.trans,
                     product_name: response.data.content.transactions.type,
@@ -115,16 +115,10 @@ router.post('/singleTransaction', auth, async (req, res) => {
                 //trans.save();
                 if(response.data.content.transactionId == response.data.content.transactionId) {
                     res.status(200).json({
-                        transaction,
-                        success: true,
-                        msg: "success"
+                        data
                     })
                     return
                 } else {
-                    const transaction = new Transaction({
-                        status: response.data.response_description
-                    })
-                    transaction.save();
                     throw err
                 }
             })

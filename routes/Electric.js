@@ -12,6 +12,12 @@ router.get('/verifyNumber', auth, async (req, res) => {
     res.json(verify)
 })
 
+router.get('/getElectric', auth, async (req, res) => {
+    const electric = await Electric.find({ walletId: req.user.walletId })
+    res.status(200).json(electric)
+})
+
+
 router.post('/verifyNumber', auth, async (req, res, error) => {
     const { meter, service, select, transactionId } = req.body
     
@@ -42,12 +48,10 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
                 walletId: userId._id,
                 select: select
             })
-            verify.save();
+            //verify.save();
             if(response.data.content.WrongBillersCode == false) {
                 res.status(200).json({
-                    verify,
-                    success: true,
-                    msg: "success"
+                    verify
                 })
                 return
             } else {
@@ -189,8 +193,8 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
     
 
 // prepaid single query
-router.post('/DataTransaction', auth, async (req, res) => {
-    const { AmountInt, service, phone, variation } = req.body
+router.post('/ElectrictransAction', auth, async (req, res) => {
+    const { trans } = req.body
     const requestId = uuidv4();
 
     const user = `${process.env.email_login}:${process.env.password_login}`
@@ -205,20 +209,14 @@ router.post('/DataTransaction', auth, async (req, res) => {
       }
 
     const body = {
-        request_id: requestId,
-        serviceID: service,
-        amount: AmountInt,
-        billersCode: phone,
-        variation_code: variation,
-        amount: AmountInt,
-        phone: phone
+        request_id: trans,
     }
     
     const userId = await Wallet.findById(req.user.walletId)
 
     axios.post(`${process.env.singleElectric}`, body, config)
         .then(res => {
-            const trans = new Transaction({
+            const electric = new Electric({
                 amount: response.data.content.transactions.amount,
                 requestId: req.body.trans,
                 product_name: response.data.content.transactions.type,
@@ -232,16 +230,10 @@ router.post('/DataTransaction', auth, async (req, res) => {
             //trans.save();
             if(response.data.content.transactionId == response.data.content.transactionId) {
                 res.status(200).json({
-                    transaction,
-                    success: true,
-                    msg: "success"
+                    electric
                 })
                 return
             } else {
-                const transaction = new Transaction({
-                    status: response.data.response_description
-                })
-                transaction.save();
                 throw err
             }
         })
