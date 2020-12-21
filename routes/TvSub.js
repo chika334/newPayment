@@ -12,6 +12,11 @@ router.get('/getverifySmartcardNumber', auth, async (req, res) => {
     res.json(smartCards)
 })
 
+router.get('/getSmartcard', auth, async (req, res) => {
+    const smartCards = await Smartcard.find({ walletId: req.user.walletId })
+    res.json(smartCards)
+})
+
 router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
     //console.log(req.body)
     const { service, smartCard, transactionId, select } = req.body
@@ -42,12 +47,10 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
                 walletId: userId._id,
                 select: select
             })
-            smartCards.save();
+            //smartCards.save();
             if(response.data.content.Customer_Name == response.data.content.Customer_Name) {
                 res.status(200).json({
                     smartCards,
-                    success: true,
-                    msg: "success"
                 })
                 return
             } else {
@@ -87,16 +90,16 @@ router.post('/payTvBill', auth, async (req, res, err) => {
     
     const userId = await Wallet.findById(req.user.walletId)
 
-    if(userId.wallet < AmountInt) {
+    /*if(userId.wallet < AmountInt) {
         res.status(400).json({
             msg: "Error occured while querying transaction"
         })
         return
-    } else {
+    } else {*/
         axios.post(`${process.env.PAYTVBILL}`, body, config)
             .then(response => {
                 //console.log(res.data)
-                const transaction = new Transaction({
+                const smartCards = new Smartcard({
                     smartCard: smartCard, 
                     walletId: userId._id, 
                     type: response.data.content.type, 
@@ -105,14 +108,12 @@ router.post('/payTvBill', auth, async (req, res, err) => {
                     amount: AmountInt, 
                     product_name: response.data.content.product_name 
                 })
-                transaction.save();
+                smartCards.save();
                 if (response.data.response_description === "BELOW MINIMUM AMOUNT ALLOWED") {
                     throw err
                 } else {
                     res.status(200).json({
-                        transaction,
-                        success: true,
-                        msg: 'success'
+                        smartCards
                     })
                 }
              })
@@ -122,7 +123,55 @@ router.post('/payTvBill', auth, async (req, res, err) => {
                     msg: "Below minimum amount allowed"
                 })
              })
-        }
+        //}
   })
+
+// single tvsub
+router.post('/TvSubTranx', auth, async (req, res) => {
+    const { trans } = req.body
+
+    const user = `${process.env.email_login}:${process.env.password_login}`
+    const base64 = Buffer.from(user).toString('base64');
+
+    const config = {
+        headers: {
+          "Authorization": `Basic ${base64}`
+        }
+      }
+
+    const body = {
+        request_id: trans,
+    }
+    
+    const userId = await Wallet.findById(req.user.walletId)
+    
+    axios.post(`${process.env.specificTrans}`, body, config)
+        .then(async response => {
+            let smartCards = new Smartcard({
+                amount: response.data.content.transactions.amount,
+                requestId: req.body.trans,
+                product_name: response.data.content.transactions.type,
+                date: response.data.transaction_date.date,
+                total_amount: response.data.content.transactions.total_amount,
+                transactionId: response.data.content.transactions.transactionId,
+                status: response.data.response_description,
+                walletId: userId._id
+            })
+
+            if(response.data.content.transactionId == response.data.content.transactionId) {
+                res.status(200).json({
+                    smartCards
+                })
+                return
+            } else {
+                throw err
+            }
+        })
+        .catch(err => {
+            res.status(400).json({
+                msg: "Error occured while querying transaction"
+            })
+        })
+})
     
 module.exports = router;
