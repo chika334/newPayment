@@ -104,8 +104,11 @@ router.post('/payTvBill', auth, async (req, res, err) => {
                     walletId: userId._id, 
                     type: response.data.content.type, 
                     date: response.data.transaction_date.date, 
-                    response_description: response.data.response_description, 
-                    amount: AmountInt, 
+                    response_description: response.data.response_description,
+                    transactionId: response.data.content.transactions.transactionId,
+                    status: response.data.response_description,
+                    amount: response.data.amount,
+                    total_amount: response.data.content.transactions.total_amount, 
                     product_name: response.data.content.product_name 
                 })
                 smartCards.save();
@@ -148,14 +151,16 @@ router.post('/TvSubTranx', auth, async (req, res) => {
     axios.post(`${process.env.specificTrans}`, body, config)
         .then(async response => {
             let smartCards = new Smartcard({
-                amount: response.data.content.transactions.amount,
-                requestId: req.body.trans,
-                product_name: response.data.content.transactions.type,
-                date: response.data.transaction_date.date,
-                total_amount: response.data.content.transactions.total_amount,
+                smartCard: smartCard, 
+                walletId: userId._id, 
+                type: response.data.content.type, 
+                date: response.data.transaction_date.date, 
+                response_description: response.data.response_description,
                 transactionId: response.data.content.transactions.transactionId,
                 status: response.data.response_description,
-                walletId: userId._id
+                amount: response.data.amount,
+                total_amount: response.data.content.transactions.total_amount, 
+                product_name: response.data.content.product_name 
             })
 
             if(response.data.content.transactionId == response.data.content.transactionId) {
