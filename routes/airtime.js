@@ -7,10 +7,10 @@ const Pay = require('../model/PayRequest')
 const { v4: uuidv4 } = require('uuid');
 const Transaction = require("../model/Transaction")
 
-/*router.get('/getPayment', auth, async (req, res) => {
+router.get('/getPayment', auth, async (req, res) => {
     const credit = await Pay.find({ walletId: req.user.walletId })
     res.status(200).json(credit)
-})*/
+})
 
 router.get('/getTransaction', auth, async (req, res) => {
     const transaction = await Transaction.find({ walletId: req.user.walletId })
