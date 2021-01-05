@@ -33,7 +33,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
     const body = {
         request_id: requestId,
         serviceID: service,
-        amount: AmountInt,
+        amount: amount,
         phone: phone
     }
     
