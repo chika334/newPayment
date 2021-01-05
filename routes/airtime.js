@@ -52,6 +52,8 @@ router.post('/creditTransaction', auth, async (req, res) => {
             status: response.data.response_description,
             walletId: userId._id,
         })
+        
+        console.log(transaction)
 
         transaction.save();
         if(response.data.content.transactionId == response.data.content.transactionId) {
