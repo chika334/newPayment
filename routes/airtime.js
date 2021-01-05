@@ -38,34 +38,34 @@ router.post('/creditTransaction', auth, async (req, res) => {
     }
     
     const userId = await Wallet.findById(req.user.walletId)
-    console.log(userId)
+    //console.log(userId)
 
     axios.post(`${process.env.airtime}`, body, config)
-    .then(response => {
-        const transaction = new Transaction({
-            amount: response.data.amount,
-            requestId: response.data.requestId,
-            product_name: response.data.content.transactions.product_name,
-            date: response.data.transaction_date.date,
-            total_amount: response.data.content.transactions.total_amount,
-            transactionId: response.data.content.transactions.transactionId,
-            status: response.data.response_description,
-            walletId: userId._id,
-        })
-        
-        console.log(transaction)
-
-        transaction.save();
-        if(response.data.content.transactionId == response.data.content.transactionId) {
-            res.status(200).json({
-                transaction
+        .then(response => {
+            const transaction = new Transaction({
+                amount: response.data.amount,
+                requestId: response.data.requestId,
+                product_name: response.data.content.transactions.product_name,
+                date: response.data.transaction_date.date,
+                total_amount: response.data.content.transactions.total_amount,
+                transactionId: response.data.content.transactions.transactionId,
+                status: response.data.response_description,
+                walletId: userId._id,
             })
-            return
-        } else {
-            throw err
-        }
-    })
-    .catch(err => console.log(err))
+            
+            console.log(response)
+
+            transaction.save();
+            if(response.data.content.transactionId == response.data.content.transactionId) {
+                res.status(200).json({
+                    transaction
+                })
+                return
+            } else {
+                throw err
+            }
+        })
+        .catch(err => console.log(err))
 })
 
 router.post('/Transaction', auth, async (req, res) => {
