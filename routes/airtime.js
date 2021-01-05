@@ -37,6 +37,8 @@ router.post('/creditTransaction', auth, async (req, res) => {
         phone: phone
     }
     
+    console.log(body)
+    
     const userId = await Wallet.findById(req.user.walletId)
     //console.log(userId)
 
@@ -52,8 +54,6 @@ router.post('/creditTransaction', auth, async (req, res) => {
                 status: response.data.response_description,
                 walletId: userId._id,
             })
-            
-            console.log(response)
 
             transaction.save();
             if(response.data.content.transactionId == response.data.content.transactionId) {
