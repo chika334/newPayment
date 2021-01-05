@@ -44,7 +44,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 
     axios.post(`${process.env.airtime}`, body, config)
         .then(response => {
-            console.log(response.data)
+            //console.log(response.data)
             const transaction = new Transaction({
                 amount: response.data.amount,
                 requestId: response.data.requestId,
