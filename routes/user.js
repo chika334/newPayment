@@ -28,7 +28,7 @@ router.get('/auth/me', (req, res) => {
 // get all authenticated user
 router.get('/getUser', auth, async (req, res) => {
   const user = await User.findById(req.user._id).select('-password')
-  console.log(user);
+  // console.log(user);
 	res.json(user)
 })
 
