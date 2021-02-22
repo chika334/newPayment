@@ -23,7 +23,7 @@ router.get('/getTransaction', auth, async (req, res) => {
 });
 
 // Buy airtime
-router.post('/creditTransaction', async (req, res) => {
+router.post('/creditTransaction', auth, async (req, res) => {
 	const { amount, service, phone, name } = req.body;
 	const requestId = uuidv4();
 
