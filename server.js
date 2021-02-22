@@ -11,6 +11,7 @@ const user = require('./routes/user.js');
 // const wallet = require("./routes/wallet")
 const airtime = require('./routes/airtime');
 const electric = require('./routes/Electric');
+const paystack = require('./routes/paystack');
 //const insurance = require('./routes/insurance')
 const data = require('./routes/Data');
 const kyc = require('./routes/KYCandBVN');
@@ -35,6 +36,7 @@ mongoose
 // router middleware
 app.use(express.json());
 app.use('/api', user);
+app.use('/api', paystack);
 // app.use('/api', wallet);
 app.use('/api', airtime);
 app.use('/api', electric);
