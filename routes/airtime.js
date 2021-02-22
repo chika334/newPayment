@@ -13,12 +13,10 @@ const Transaction = require('../model/Transaction');
 // 	res.status(200).json(credit);
 // });
 
-const userId = User.findById(req.user._id);
-
-console.log(userId);
-
 // get all airtimes
 router.get('/getTransaction', auth, async (req, res) => {
+	const userId = await User.findById(req.user._id);
+	console.log(userId);
 	// const transaction = await Transaction.find({ _id: req.user._id });
 	// console.log(transaction);
 	// res.status(200).json(transaction);
@@ -47,6 +45,9 @@ router.post('/creditTransaction', auth, async (req, res) => {
 
 	console.log(body);
 
+	const userId = await User.findById(req.user._id);
+
+	console.log(userId);
 	// const userId = await Wallet.findById(req.user.walletId);
 	//console.log(userId)
 
@@ -61,8 +62,9 @@ router.post('/creditTransaction', auth, async (req, res) => {
 				date: response.data.transaction_date.date,
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
-				status: response.data.response_description
+				status: response.data.response_description,
 				// walletId: userId._id
+				user: userId
 			});
 
 			transaction.save();
