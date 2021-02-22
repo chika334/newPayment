@@ -15,11 +15,11 @@ const Transaction = require('../model/Transaction');
 
 // get all airtimes
 router.get('/getTransaction', auth, async (req, res) => {
-	const userId = await User.findById(req.user._id);
-	console.log(userId._id, "transactions");
-	// const transaction = await Transaction.find({ _id: req.user._id });
+	// const userId = await User.findById(req.user._id);
+	// console.log(userId._id, "transactions");
+	const transaction = await Transaction.find({ _id: req.user._id });
 	// console.log(transaction);
-	// res.status(200).json(transaction);
+	res.status(200).json(transaction);
 });
 
 // Buy airtime

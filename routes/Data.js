@@ -10,10 +10,10 @@ const Transaction = require('../model/Transaction');
 
 // get all data transations
 router.get('/dataTransaction', auth, async (req, res) => {
-	const userId = await User.findById(req.user._id);
-	console.log(userId, "transactions");
-	// const transaction = await Data.find({ walletId: req.user.walletId });
-	// res.status(200).json(transaction);
+	// const userId = await User.findById(req.user._id);
+	// console.log(userId, "transactions");
+	const transaction = await Data.find({ walletId: req.user.walletId });
+	res.status(200).json(transaction);
 });
 
 // buy data

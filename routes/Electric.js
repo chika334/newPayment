@@ -9,18 +9,18 @@ const Electric = require('../model/Electric');
 const Verify = require('../model/Verify');
 
 router.get('/verifyNumber', auth, async (req, res) => {
-	const userId = await User.findById(req.user._id);
-	console.log(userId, "transactions");
-	// const verify = await Verify.find({ walletId: req.user.walletId });
-	// res.json(verify);
+	// const userId = await User.findById(req.user._id);
+	// console.log(userId, "transactions");
+	const verify = await Verify.find({ walletId: req.user.walletId });
+	res.json(verify);
 });
 
 // get all electric
 router.get('/getElectric', auth, async (req, res) => {
-	const userId = await User.findById(req.user._id);
-	console.log(userId, "transactions");
-	// const electric = await Electric.find({ walletId: req.user.walletId });
-	// res.status(200).json(electric);
+	// const userId = await User.findById(req.user._id);
+	// console.log(userId, "transactions");
+	const electric = await Electric.find({ walletId: req.user.walletId });
+	res.status(200).json(electric);
 });
 
 router.post('/verifyNumber', auth, async (req, res, error) => {

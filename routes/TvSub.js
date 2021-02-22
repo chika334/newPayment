@@ -9,10 +9,10 @@ const TvSub = require('../model/payTvSub');
 const Smartcard = require('../model/smartCard');
 
 router.get('/getverifySmartcardNumber', auth, async (req, res) => {
-	const userId = await User.findById(req.user._id);
-	console.log(userId, "transactions");
-	// const smartCards = await Smartcard.find({ walletId: req.user.walletId });
-	// res.json(smartCards);
+	// const userId = await User.findById(req.user._id);
+	// console.log(userId, "transactions");
+	const smartCards = await Smartcard.find({ walletId: req.user.walletId });
+	res.json(smartCards);
 });
 
 // get all smart cards
