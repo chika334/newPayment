@@ -18,13 +18,13 @@ router.get(`/paystack`, async (req, res) => {
 			output = success;
 			// console.log(success);
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => output = err);
 
 	//now we check for internet connectivity issues
-	if (!output.response && output.status !== 200) throw new UserInputError('No internet Connection');
-	//next,we confirm that there was no error in verification.
-	if (output.response && !output.response.data.status)
-		throw new UserInputError("Error verifying payment , 'unknown Transaction    Reference Id'");
+	// if (!output.response && output.status !== 200) throw new UserInputError('No internet Connection');
+	// //next,we confirm that there was no error in verification.
+	// if (output.response && !output.response.data.status)
+	// 	throw new UserInputError("Error verifying payment , 'unknown Transaction    Reference Id'");
 
 	//  }
 	//we return the output of the transaction
