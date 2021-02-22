@@ -1,4 +1,5 @@
 // const Wallet = require('../model/Wallet');
+const User = require('../routes/user');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
@@ -11,6 +12,10 @@ const Transaction = require('../model/Transaction');
 // 	const credit = await Pay.find({ walletId: req.user.walletId });
 // 	res.status(200).json(credit);
 // });
+
+const userId = User.findById(req.user._id);
+
+console.log(userId);
 
 // get all airtimes
 router.get('/getTransaction', auth, async (req, res) => {
