@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require('axios');
 const auth = require('../middleware/auth');
 
-router.get(`/paystack`, auth, async (req, res) => {
+router.get(`/paystack`, async (req, res) => {
 	const reference = req.query.reference;
 	let output;
 	await axios
