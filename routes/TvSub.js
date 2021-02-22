@@ -1,5 +1,6 @@
 // const Wallet = require('../model/Wallet');
 const express = require('express');
+const User = require('../model/User');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const axios = require('axios');
