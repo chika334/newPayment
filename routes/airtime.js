@@ -16,7 +16,7 @@ const Transaction = require('../model/Transaction');
 // get all airtimes
 router.get('/getTransaction', auth, async (req, res) => {
 	const userId = await User.findById(req.user._id);
-	console.log(userId, "transactions");
+	console.log(userId._id, "transactions");
 	// const transaction = await Transaction.find({ _id: req.user._id });
 	// console.log(transaction);
 	// res.status(200).json(transaction);
@@ -47,7 +47,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 
 	const userId = await User.findById(req.user._id);
 
-	console.log(userId);
+	// console.log(userId);
 	// const userId = await Wallet.findById(req.user.walletId);
 	//console.log(userId)
 
@@ -63,8 +63,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
-				// walletId: userId._id
-				userId: userId
+				userId: userId._id
 			});
 
 			transaction.save();
