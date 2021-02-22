@@ -61,4 +61,4 @@ router.get(`/paystack`, async (req, res) => {
 // 	res.status(200).send('Payment was successfully verified');
 // });
 
-// module.exports = router;
+module.exports = router;
