@@ -17,10 +17,10 @@ router.get('/getverifySmartcardNumber', auth, async (req, res) => {
 
 // get all smart cards
 router.get('/getSmartcard', auth, async (req, res) => {
-	const userId = await User.findById(req.user._id);
-	console.log(userId, "transactions");
-	// const smartCards = await Smartcard.find({ walletId: req.user.walletId });
-	// res.json(smartCards);
+	// const userId = await User.findById(req.user._id);
+	// console.log(userId, "transactions");
+	const smartCards = await Smartcard.find({ walletId: req.user.walletId });
+	res.json(smartCards);
 });
 
 // verify smart card number
