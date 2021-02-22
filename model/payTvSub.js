@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const payTVSubSchema = new mongoose.Schema({
     smartCard: String,
-    walletId: String,
+    // walletId: String,
     type: String,
     date: String,
     response_description: String,

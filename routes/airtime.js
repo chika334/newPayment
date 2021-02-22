@@ -1,4 +1,4 @@
-const Wallet = require('../model/Wallet');
+// const Wallet = require('../model/Wallet');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
@@ -14,8 +14,8 @@ const Transaction = require('../model/Transaction');
 
 // get all airtimes
 router.get('/getTransaction', auth, async (req, res) => {
-	const transaction = await Transaction.find({ walletId: req.user.walletId });
-	res.status(200).json(transaction);
+	// const transaction = await Transaction.find({ walletId: req.user.walletId });
+	// res.status(200).json(transaction);
 });
 
 // Buy airtime
@@ -41,7 +41,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 
 	console.log(body);
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 	//console.log(userId)
 
 	axios
@@ -56,7 +56,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
-				walletId: userId._id
+				// walletId: userId._id
 			});
 
 			transaction.save();
@@ -89,7 +89,7 @@ router.post('/Transaction', auth, async (req, res) => {
 		request_id: trans
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(`${process.env.specificTrans}`, body, config)
@@ -102,7 +102,7 @@ router.post('/Transaction', auth, async (req, res) => {
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
-				walletId: userId._id
+				// walletId: userId._id
 			});
 
 			if (response.data.content.transactionId == response.data.content.transactionId) {
@@ -111,17 +111,15 @@ router.post('/Transaction', auth, async (req, res) => {
 				});
 				return;
 			} else {
-				/*const transaction = new Transaction({
-                    status: response.data.response_description
-                })
-                transaction.save();*/
 				throw err;
 			}
 		})
 		.catch((err) => {
-			res.status(400).json({
-				msg: 'Error occured while querying transaction'
-			});
+			// res.status(400).json({
+			// 	msg: 'Error occured while querying transaction'
+			// });
+			console.log(err);
+			
 		});
 });
 

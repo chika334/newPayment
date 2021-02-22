@@ -8,14 +8,14 @@ const Electric = require('../model/Electric');
 const Verify = require('../model/Verify');
 
 router.get('/verifyNumber', auth, async (req, res) => {
-	const verify = await Verify.find({ walletId: req.user.walletId });
-	res.json(verify);
+	// const verify = await Verify.find({ walletId: req.user.walletId });
+	// res.json(verify);
 });
 
 // get all electric
 router.get('/getElectric', auth, async (req, res) => {
-	const electric = await Electric.find({ walletId: req.user.walletId });
-	res.status(200).json(electric);
+	// const electric = await Electric.find({ walletId: req.user.walletId });
+	// res.status(200).json(electric);
 });
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
@@ -36,7 +36,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
 		type: select
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(`${process.env.verifyMeterNumber}`, body, config)
@@ -46,7 +46,7 @@ router.post('/verifyNumber', auth, async (req, res, error) => {
 				Meter_Number: response.data.content.Meter_Number,
 				Address: response.data.content.Address,
 				transactionID: req.body.transactionId,
-				walletId: userId._id,
+				// walletId: userId._id,
 				select: select
 			});
 			//verify.save();
@@ -91,7 +91,7 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
 		phone: phone
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	if (userId.wallet < AmountInt) {
 		res.status(400).json({
@@ -107,7 +107,7 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
 					Customer_Name: res.data.content.Customer_Name,
 					Meter_Number: meter,
 					Address: res.data.content.Address,
-					walletId: userId._id,
+					// walletId: userId._id,
 					type: res.data.content.type,
 					date: res.data.transaction_date.date,
 					response_description: res.data.response_description,
@@ -155,7 +155,7 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
 		phone: phone
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	if (userId.wallet < AmountInt) {
 		res.status(400).json({
@@ -171,7 +171,7 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
 					Customer_Name: res.data.content.Customer_Name,
 					Meter_Number: meter,
 					Address: res.data.content.Address,
-					walletId: userId._id,
+					// walletId: userId._id,
 					type: res.data.content.type,
 					date: res.data.transaction_date.date,
 					response_description: res.data.response_description,
@@ -216,7 +216,7 @@ router.post('/ElectrictransAction', auth, async (req, res) => {
 		request_id: trans
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(`${process.env.singleElectric}`, body, config)
@@ -229,7 +229,7 @@ router.post('/ElectrictransAction', auth, async (req, res) => {
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
-				walletId: userId._id,
+				// walletId: userId._id,
 				uniqueId: uniqueId
 			});
 			//trans.save();

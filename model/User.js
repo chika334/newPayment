@@ -51,7 +51,7 @@ const UserSchema = new mongoose.Schema({
 	bvnphone: {
 		type: String,
 	},
-	walletId: String,
+	// walletId: String,
 	companyname: String,
 	companyaddress: String,
 	homeaddress: String,

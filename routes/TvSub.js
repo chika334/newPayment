@@ -8,14 +8,14 @@ const TvSub = require('../model/payTvSub');
 const Smartcard = require('../model/smartCard');
 
 router.get('/getverifySmartcardNumber', auth, async (req, res) => {
-	const smartCards = await Smartcard.find({ walletId: req.user.walletId });
-	res.json(smartCards);
+	// const smartCards = await Smartcard.find({ walletId: req.user.walletId });
+	// res.json(smartCards);
 });
 
 // get all smart cards
 router.get('/getSmartcard', auth, async (req, res) => {
-	const smartCards = await Smartcard.find({ walletId: req.user.walletId });
-	res.json(smartCards);
+	// const smartCards = await Smartcard.find({ walletId: req.user.walletId });
+	// res.json(smartCards);
 });
 
 // verify smart card number
@@ -37,7 +37,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
 		serviceID: service
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(process.env.verifyMeterNumber, body, config)
@@ -47,7 +47,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
 				Smartcard_Number: smartCard,
 				Customer_ID: response.data.content.Customer_ID,
 				transactionID: req.body.transactionId,
-				walletId: userId._id,
+				// walletId: userId._id,
 				select: select
 			});
 			//smartCards.save();
@@ -92,7 +92,7 @@ router.post('/payTvBill', auth, async (req, res, err) => {
 		phone: phone
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(`${process.env.PAYTVBILL}`, body, config)
@@ -100,7 +100,7 @@ router.post('/payTvBill', auth, async (req, res, err) => {
 			//console.log(res.data)
 			const smartCards = new Smartcard({
 				smartCard: smartCard,
-				walletId: userId._id,
+				// walletId: userId._id,
 				type: response.data.content.type,
 				date: response.data.transaction_date.date,
 				response_description: response.data.response_description,
@@ -143,14 +143,14 @@ router.post('/TvSubTranx', auth, async (req, res) => {
 		request_id: trans
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(`${process.env.specificTrans}`, body, config)
 		.then(async (response) => {
 			let smartCards = new Smartcard({
 				smartCard: smartCard,
-				walletId: userId._id,
+				// walletId: userId._id,
 				type: response.data.content.type,
 				date: response.data.transaction_date.date,
 				response_description: response.data.response_description,

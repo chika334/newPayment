@@ -1,4 +1,4 @@
-const Wallet = require('../model/Wallet');
+// const Wallet = require('../model/Wallet');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
@@ -9,8 +9,8 @@ const Transaction = require('../model/Transaction');
 
 // get all data transations
 router.get('/dataTransaction', auth, async (req, res) => {
-	const transaction = await Data.find({ walletId: req.user.walletId });
-	res.status(200).json(transaction);
+	// const transaction = await Data.find({ walletId: req.user.walletId });
+	// res.status(200).json(transaction);
 });
 
 // buy data
@@ -37,7 +37,7 @@ router.post('/DataTransaction', auth, async (req, res) => {
 		phone: phone
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	/*if(userId.wallet < AmountInt) {
         res.status(400).json({
@@ -56,7 +56,7 @@ router.post('/DataTransaction', auth, async (req, res) => {
 				total_amount: res.data.content.transactions.total_amount,
 				transactionId: res.data.content.transactions.transactionId,
 				status: res.data.response_description,
-				walletId: userId._id
+				// walletId: userId._id
 			});
 			data.save();
 			if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
@@ -96,7 +96,7 @@ router.post('/singleTransaction', auth, async (req, res) => {
 		request_id: requestId
 	};
 
-	const userId = await Wallet.findById(req.user.walletId);
+	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(`${process.env.dataSingle}`, body, config)
@@ -110,7 +110,7 @@ router.post('/singleTransaction', auth, async (req, res) => {
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
 				walletId: userId._id,
-				uniqueId: uniqueId
+				// uniqueId: uniqueId
 			});
 			//trans.save();
 			if (response.data.content.transactionId == response.data.content.transactionId) {

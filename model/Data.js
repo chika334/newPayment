@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
 const DataSchema = new mongoose.Schema({
-    walletId: String,
+    // walletId: String,
     amount: String,
     requestId: String,
     product_name: String,
