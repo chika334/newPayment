@@ -3,13 +3,13 @@ const router = express.Router();
 const axios = require('axios');
 const auth = require('../middleware/auth');
 
-router.get(`/paystack`,async (req, res) => {
+router.get(`/paystack`, auth, async (req, res) => {
 	const reference = req.query.reference;
 	let output;
 	await axios
 		.get(`https://api.paystack.co/transaction/verify/${reference}`, {
 			headers: {
-				authorization: 'Bearer pk_test_720ee3c85df4694c61d2e3a44af54094fbe26703',
+				authorization: 'Bearer sk_test_f85f819b644d84c213774720b1f268abe0e84782',
 				'content-type': 'application/json',
 				'cache-control': 'no-cache'
 			}
