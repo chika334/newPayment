@@ -29,7 +29,7 @@ mongoose.connect(process.env.DATABASE, { useNewUrlParser: true, useUnifiedTopolo
 // router middleware
 app.use(express.json());
 app.use('/api', user);
-app.use('/api', wallet);
+// app.use('/api', wallet);
 app.use('/api', airtime);
 app.use('/api', electric)
 //app.use('/api', insurance);
