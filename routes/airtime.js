@@ -1,5 +1,5 @@
 // const Wallet = require('../model/Wallet');
-const User = require('../routes/user');
+const User = require('../model/User');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
