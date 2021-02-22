@@ -14,7 +14,8 @@ const Transaction = require('../model/Transaction');
 
 // get all airtimes
 router.get('/getTransaction', auth, async (req, res) => {
-	// const transaction = await Transaction.find({ walletId: req.user.walletId });
+	const transaction = await Transaction.find({ _id: req.user._id });
+	console.log(transaction);
 	// res.status(200).json(transaction);
 });
 
@@ -55,7 +56,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 				date: response.data.transaction_date.date,
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
-				status: response.data.response_description,
+				status: response.data.response_description
 				// walletId: userId._id
 			});
 
@@ -101,7 +102,7 @@ router.post('/Transaction', auth, async (req, res) => {
 				date: response.data.transaction_date.date,
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
-				status: response.data.response_description,
+				status: response.data.response_description
 				// walletId: userId._id
 			});
 
@@ -119,7 +120,6 @@ router.post('/Transaction', auth, async (req, res) => {
 			// 	msg: 'Error occured while querying transaction'
 			// });
 			console.log(err);
-			
 		});
 });
 
