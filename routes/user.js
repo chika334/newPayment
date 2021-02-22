@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth.js');
 const bcrypt = require('bcrypt');
-const Wallet = require('../model/Wallet');
+// const Wallet = require('../model/Wallet');
 const jwt = require('jsonwebtoken');
 
 // auth middleware
