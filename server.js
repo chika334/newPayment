@@ -8,7 +8,7 @@ require('dotenv').config();
 
 // routes
 const user = require('./routes/user.js');
-const wallet = require('./routes/wallet');
+// const wallet = require("./routes/wallet")
 const airtime = require('./routes/airtime');
 const electric = require('./routes/Electric');
 //const insurance = require('./routes/insurance')
@@ -35,7 +35,7 @@ mongoose
 // router middleware
 app.use(express.json());
 app.use('/api', user);
-app.use('/api', wallet);
+// app.use('/api', wallet);
 app.use('/api', airtime);
 app.use('/api', electric);
 //app.use('/api', insurance);
