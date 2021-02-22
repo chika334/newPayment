@@ -4,7 +4,7 @@ const ElectricSchema = new mongoose.Schema({
     Customer_Name: String,
     Meter_Number: String,
     Address: String,
-    // walletId: String,
+    userId: String,
     type: String,
     date: String,
     response_description: String,
