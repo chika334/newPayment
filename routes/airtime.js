@@ -69,7 +69,7 @@ router.post('/creditTransaction', auth, async (req, res) => {
 				throw err;
 			}
 		})
-		.catch((err) => console.log(err.message));
+		.catch((err) => console.log(err));
 });
 
 // single airtime
