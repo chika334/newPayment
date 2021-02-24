@@ -43,6 +43,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
 	};
 
 	// const userId = await Wallet.findById(req.user.walletId);
+	const userId = await User.findById(req.user._id);
 
 	axios
 		.post(process.env.verifyMeterNumber, body, config)
@@ -52,7 +53,7 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
 				Smartcard_Number: smartCard,
 				Customer_ID: response.data.content.Customer_ID,
 				transactionID: req.body.transactionId,
-				// walletId: userId._id,
+				userId: userId._id,
 				select: select
 			});
 			//smartCards.save();
@@ -66,10 +67,11 @@ router.post('/verifySmartcardNumber', auth, async (req, res, err) => {
 			}
 		})
 		.catch((err) => {
-			res.status(400).json({
-				success: false,
-				msg: 'Invalid Smartcard Number. Please check and Try Again'
-			});
+			// res.status(400).json({
+			// 	success: false,
+			// 	msg: 'Invalid Smartcard Number. Please check and Try Again'
+			// });
+			console.log(err);
 		});
 });
 
@@ -98,14 +100,14 @@ router.post('/payTvBill', auth, async (req, res, err) => {
 	};
 
 	// const userId = await Wallet.findById(req.user.walletId);
+	const userId = await User.findById(req.user._id);
 
 	axios
 		.post(`${process.env.PAYTVBILL}`, body, config)
 		.then((response) => {
-			//console.log(res.data)
 			const smartCards = new Smartcard({
 				smartCard: smartCard,
-				// walletId: userId._id,
+				userId: userId._id,
 				type: response.data.content.type,
 				date: response.data.transaction_date.date,
 				response_description: response.data.response_description,
@@ -116,18 +118,20 @@ router.post('/payTvBill', auth, async (req, res, err) => {
 				product_name: response.data.content.product_name
 			});
 			smartCards.save();
-			if (response.data.response_description === 'BELOW MINIMUM AMOUNT ALLOWED') {
-				throw err;
-			} else {
+			if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
 				res.status(200).json({
-					smartCards
+					msg: 'success'
 				});
+				return;
+			} else {
+				throw err;
 			}
 		})
 		.catch((err) => {
-			res.status(400).json({
-				msg: 'Below minimum amount allowed'
-			});
+			// res.status(400).json({
+			// 	msg: 'Below minimum amount allowed'
+			// });
+			console.log(err);
 		});
 });
 
@@ -149,13 +153,14 @@ router.post('/TvSubTranx', auth, async (req, res) => {
 	};
 
 	// const userId = await Wallet.findById(req.user.walletId);
+	const userId = await User.findById(req.user._id);
 
 	axios
 		.post(`${process.env.specificTrans}`, body, config)
 		.then(async (response) => {
 			let smartCards = new Smartcard({
 				smartCard: smartCard,
-				// walletId: userId._id,
+				userId: userId._id,
 				type: response.data.content.type,
 				date: response.data.transaction_date.date,
 				response_description: response.data.response_description,
@@ -176,9 +181,10 @@ router.post('/TvSubTranx', auth, async (req, res) => {
 			}
 		})
 		.catch((err) => {
-			res.status(400).json({
-				msg: 'Error occured while querying transaction'
-			});
+			// res.status(400).json({
+			// 	msg: 'Error occured while querying transaction'
+			// });
+			console.log(err);
 		});
 });
 

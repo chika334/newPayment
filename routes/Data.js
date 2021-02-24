@@ -41,17 +41,12 @@ router.post('/DataTransaction', auth, async (req, res) => {
 	};
 
 	// const userId = await Wallet.findById(req.user.walletId);
+	const userId = await User.findById(req.user._id);
 
-	/*if(userId.wallet < AmountInt) {
-        res.status(400).json({
-            msg: "Wallet balance is low. please fund account"
-        })
-        return
-    } else {*/
 	axios
 		.post(`${process.env.data_API}`, body, config)
 		.then((res) => {
-			const data = new Data({
+			const transaction = new Transaction({
 				amount: res.data.amount,
 				requestId: res.data.requestId,
 				product_name: res.data.content.transactions.product_name,
@@ -59,9 +54,9 @@ router.post('/DataTransaction', auth, async (req, res) => {
 				total_amount: res.data.content.transactions.total_amount,
 				transactionId: res.data.content.transactions.transactionId,
 				status: res.data.response_description,
-				// walletId: userId._id
+				userId: userId._id
 			});
-			data.save();
+			transaction.save();
 			if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
 				res.status(200).json({
 					msg: 'success'
@@ -72,9 +67,10 @@ router.post('/DataTransaction', auth, async (req, res) => {
 			}
 		})
 		.catch((err) =>
-			res.status(400).json({
-				msg: 'Error occured while querying transaction'
-			})
+			// res.status(400).json({
+			// 	msg: 'Error occured while querying transaction'
+			// })
+			console.log(err)
 		);
 	// }
 });
@@ -99,12 +95,13 @@ router.post('/singleTransaction', auth, async (req, res) => {
 		request_id: requestId
 	};
 
+	const userId = await User.findById(req.user._id);
 	// const userId = await Wallet.findById(req.user.walletId);
 
 	axios
 		.post(`${process.env.dataSingle}`, body, config)
 		.then((res) => {
-			const data = new Data({
+			const transaction = new Transaction({
 				amount: response.data.content.transactions.amount,
 				requestId: req.body.trans,
 				product_name: response.data.content.transactions.type,
@@ -112,13 +109,13 @@ router.post('/singleTransaction', auth, async (req, res) => {
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
-				walletId: userId._id,
+				userId: userId._id,
 				// uniqueId: uniqueId
 			});
 			//trans.save();
 			if (response.data.content.transactionId == response.data.content.transactionId) {
 				res.status(200).json({
-					data
+					transaction
 				});
 				return;
 			} else {

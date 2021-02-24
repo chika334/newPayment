@@ -96,14 +96,16 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
 		phone: phone
 	};
 
+	
 	// const userId = await Wallet.findById(req.user.walletId);
+	const userId = await User.findById(req.user._id);
 
-	if (userId.wallet < AmountInt) {
-		res.status(400).json({
-			msg: 'Wallet balance is low. please fund account'
-		});
-		return;
-	} else {
+	// if (userId.wallet < AmountInt) {
+	// 	res.status(400).json({
+	// 		msg: 'Wallet balance is low. please fund account'
+	// 	});
+	// 	return;
+	// } else {
 		axios
 			.post(`${process.env.prepaidMeterPayment}`, body, config)
 			.then((res) => {
@@ -112,7 +114,7 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
 					Customer_Name: res.data.content.Customer_Name,
 					Meter_Number: meter,
 					Address: res.data.content.Address,
-					// walletId: userId._id,
+					userId: userId._id,
 					type: res.data.content.type,
 					date: res.data.transaction_date.date,
 					response_description: res.data.response_description,
@@ -120,20 +122,28 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
 					product_name: res.data.content.product_name
 				});
 				electric.save();
-				if (res.data.response_description === 'BELOW MINIMUM AMOUNT ALLOWED') {
-					throw err;
-				} else {
+				if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
 					res.status(200).json({
 						msg: 'success'
 					});
+					return;
+				} else {
+					throw err;
 				}
+				// if (res.data.response_description === 'BELOW MINIMUM AMOUNT ALLOWED') {
+				// 	throw err;
+				// } else {
+				// 	res.status(200).json({
+				// 		msg: 'success'
+				// 	});
+				// }
 			})
 			.catch((err) => {
 				res.status(400).json({
 					msg: 'Below minimum amount allowed'
 				});
 			});
-	}
+	// }
 });
 
 // pay postpaidMeter
@@ -161,13 +171,14 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
 	};
 
 	// const userId = await Wallet.findById(req.user.walletId);
+	const userId = await User.findById(req.user._id);
 
-	if (userId.wallet < AmountInt) {
-		res.status(400).json({
-			msg: 'Wallet balance is low. please fund account'
-		});
-		return;
-	} else {
+	// if (userId.wallet < AmountInt) {
+	// 	res.status(400).json({
+	// 		msg: 'Wallet balance is low. please fund account'
+	// 	});
+	// 	return;
+	// } else {
 		axios
 			.post(`${process.env.postpaidMeterPayment}`, body, config)
 			.then((res) => {
@@ -176,7 +187,7 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
 					Customer_Name: res.data.content.Customer_Name,
 					Meter_Number: meter,
 					Address: res.data.content.Address,
-					// walletId: userId._id,
+					userId: userId._id,
 					type: res.data.content.type,
 					date: res.data.transaction_date.date,
 					response_description: res.data.response_description,
@@ -185,12 +196,13 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
 					product_name: res.data.content.product_name
 				});
 				electric.save();
-				if (res.data.response_description === 'BELOW MINIMUM AMOUNT ALLOWED') {
-					throw err;
-				} else {
+				if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
 					res.status(200).json({
 						msg: 'success'
 					});
+					return;
+				} else {
+					throw err;
 				}
 			})
 			.catch((err) => {
@@ -198,7 +210,7 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
 					msg: 'Below minimum amount allowed'
 				});
 			});
-	}
+	// }
 });
 
 // single electric tranx
@@ -222,6 +234,7 @@ router.post('/ElectrictransAction', auth, async (req, res) => {
 	};
 
 	// const userId = await Wallet.findById(req.user.walletId);
+	const userId = await User.findById(req.user._id);
 
 	axios
 		.post(`${process.env.singleElectric}`, body, config)
@@ -234,7 +247,7 @@ router.post('/ElectrictransAction', auth, async (req, res) => {
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
-				// walletId: userId._id,
+				userId: userId._id,
 				uniqueId: uniqueId
 			});
 			//trans.save();
