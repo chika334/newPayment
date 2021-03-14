@@ -11,8 +11,12 @@ const Transaction = require('../model/Transaction');
 // get all data transations
 router.get('/dataTransaction', auth, async (req, res) => {
 	// const userId = await User.findById(req.user._id);
-	// console.log(userId, "transactions");
-	const transaction = await Data.find({ walletId: req.user.walletId });
+	// console.log(userId, "transactions")
+	// const transaction = await Data.find({ walletId: req.user.walletId });
+	// res.status(200).json(transaction);
+	const transaction = await Transaction.find({ userId: req.user.Id });
+	console.log(transaction);
+
 	res.status(200).json(transaction);
 });
 
@@ -109,7 +113,7 @@ router.post('/singleTransaction', auth, async (req, res) => {
 				total_amount: response.data.content.transactions.total_amount,
 				transactionId: response.data.content.transactions.transactionId,
 				status: response.data.response_description,
-				userId: userId._id,
+				userId: userId._id
 				// uniqueId: uniqueId
 			});
 			//trans.save();
