@@ -14,8 +14,8 @@ router.get('/dataTransaction', auth, async (req, res) => {
 	// console.log(userId, "transactions")
 	// const transaction = await Data.find({ walletId: req.user.walletId });
 	// res.status(200).json(transaction);
-	const transaction = await Transaction.find({ userId: req.user.Id });
-	console.log(transaction);
+	const transaction = await Transaction.find({ userId: req.user._id });
+	// console.log(transaction);
 
 	res.status(200).json(transaction);
 });

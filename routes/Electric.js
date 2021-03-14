@@ -5,13 +5,13 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
-const Electric = require('../model/Electric');
+const Transaction = require('../model/Transaction');
 const Verify = require('../model/Verify');
 
 router.get('/verifyNumber', auth, async (req, res) => {
 	// const userId = await User.findById(req.user._id);
 	// console.log(userId, "transactions");
-	const verify = await Verify.find({ walletId: req.user.walletId });
+	const verify = await Verify.find({ userId: req.user._id });
 	res.json(verify);
 });
 
@@ -19,7 +19,7 @@ router.get('/verifyNumber', auth, async (req, res) => {
 router.get('/getElectric', auth, async (req, res) => {
 	// const userId = await User.findById(req.user._id);
 	// console.log(userId, "transactions");
-	const electric = await Electric.find({ walletId: req.user.walletId });
+	const transaction = await Transaction.find({ walletId: req.user.walletId });
 	res.status(200).json(electric);
 });
 
@@ -96,53 +96,47 @@ router.post('/prepaidMeterPayment', auth, async (req, res) => {
 		phone: phone
 	};
 
-	
 	// const userId = await Wallet.findById(req.user.walletId);
 	const userId = await User.findById(req.user._id);
 
-	// if (userId.wallet < AmountInt) {
-	// 	res.status(400).json({
-	// 		msg: 'Wallet balance is low. please fund account'
-	// 	});
-	// 	return;
-	// } else {
-		axios
-			.post(`${process.env.prepaidMeterPayment}`, body, config)
-			.then((res) => {
-				console.log(res.data);
-				const electric = new Electric({
-					Customer_Name: res.data.content.Customer_Name,
-					Meter_Number: meter,
-					Address: res.data.content.Address,
-					userId: userId._id,
-					type: res.data.content.type,
-					date: res.data.transaction_date.date,
-					response_description: res.data.response_description,
-					amount: AmountInt,
-					product_name: res.data.content.product_name
-				});
-				electric.save();
-				if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
-					res.status(200).json({
-						msg: 'success'
-					});
-					return;
-				} else {
-					throw err;
-				}
-				// if (res.data.response_description === 'BELOW MINIMUM AMOUNT ALLOWED') {
-				// 	throw err;
-				// } else {
-				// 	res.status(200).json({
-				// 		msg: 'success'
-				// 	});
-				// }
-			})
-			.catch((err) => {
-				res.status(400).json({
-					msg: 'Below minimum amount allowed'
-				});
+	axios
+		.post(`${process.env.prepaidMeterPayment}`, body, config)
+		.then((res) => {
+			console.log(res.data);
+			const transaction = new Transaction({
+				Customer_Name: res.data.content.Customer_Name,
+				Meter_Number: meter,
+				Address: res.data.content.Address,
+				userId: userId._id,
+				type: res.data.content.type,
+				date: res.data.transaction_date.date,
+				response_description: res.data.response_description,
+				amount: AmountInt,
+				product_name: res.data.content.product_name
 			});
+			transaction.save();
+			if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
+				res.status(200).json({
+					transaction,
+					msg: 'success'
+				});
+				return;
+			} else {
+				throw err;
+			}
+			// if (res.data.response_description === 'BELOW MINIMUM AMOUNT ALLOWED') {
+			// 	throw err;
+			// } else {
+			// 	res.status(200).json({
+			// 		msg: 'success'
+			// 	});
+			// }
+		})
+		.catch((err) => {
+			res.status(400).json({
+				msg: 'Below minimum amount allowed'
+			});
+		});
 	// }
 });
 
@@ -173,43 +167,39 @@ router.post('/postpaidMeterPayment', auth, async (req, res) => {
 	// const userId = await Wallet.findById(req.user.walletId);
 	const userId = await User.findById(req.user._id);
 
-	// if (userId.wallet < AmountInt) {
-	// 	res.status(400).json({
-	// 		msg: 'Wallet balance is low. please fund account'
-	// 	});
-	// 	return;
-	// } else {
-		axios
-			.post(`${process.env.postpaidMeterPayment}`, body, config)
-			.then((res) => {
-				console.log(res.data);
-				const electric = new Electric({
-					Customer_Name: res.data.content.Customer_Name,
-					Meter_Number: meter,
-					Address: res.data.content.Address,
-					userId: userId._id,
-					type: res.data.content.type,
-					date: res.data.transaction_date.date,
-					response_description: res.data.response_description,
-					amount: AmountInt,
-					select: select,
-					product_name: res.data.content.product_name
-				});
-				electric.save();
-				if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
-					res.status(200).json({
-						msg: 'success'
-					});
-					return;
-				} else {
-					throw err;
-				}
-			})
-			.catch((err) => {
-				res.status(400).json({
-					msg: 'Below minimum amount allowed'
-				});
+	axios
+		.post(`${process.env.postpaidMeterPayment}`, body, config)
+		.then((res) => {
+			console.log(res.data);
+			const transaction = new Transaction({
+				Customer_Name: res.data.content.Customer_Name,
+				Meter_Number: meter,
+				Address: res.data.content.Address,
+				userId: userId._id,
+				type: res.data.content.type,
+				date: res.data.transaction_date.date,
+				response_description: res.data.response_description,
+				amount: AmountInt,
+				select: select,
+				product_name: res.data.content.product_name
 			});
+
+			transaction.save();
+			if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
+				res.status(200).json({
+					transaction,
+					msg: 'success'
+				});
+				return;
+			} else {
+				throw err;
+			}
+		})
+		.catch((err) => {
+			res.status(400).json({
+				msg: 'Below minimum amount allowed'
+			});
+		});
 	// }
 });
 
@@ -239,7 +229,7 @@ router.post('/ElectrictransAction', auth, async (req, res) => {
 	axios
 		.post(`${process.env.singleElectric}`, body, config)
 		.then((res) => {
-			const electric = new Electric({
+			const transaction = new Transaction({
 				amount: response.data.content.transactions.amount,
 				requestId: req.body.trans,
 				product_name: response.data.content.transactions.type,
@@ -253,7 +243,7 @@ router.post('/ElectrictransAction', auth, async (req, res) => {
 			//trans.save();
 			if (response.data.content.transactionId == response.data.content.transactionId) {
 				res.status(200).json({
-					electric
+					transaction
 				});
 				return;
 			} else {

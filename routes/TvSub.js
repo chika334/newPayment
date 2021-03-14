@@ -5,7 +5,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
-const TvSub = require('../model/payTvSub');
+const Transaction = require('../model/Transaction');
 const Smartcard = require('../model/smartCard');
 
 router.get('/getverifySmartcardNumber', auth, async (req, res) => {
@@ -19,8 +19,8 @@ router.get('/getverifySmartcardNumber', auth, async (req, res) => {
 router.get('/getSmartcard', auth, async (req, res) => {
 	// const userId = await User.findById(req.user._id);
 	// console.log(userId, "transactions");
-	const smartCards = await Smartcard.find({ walletId: req.user.walletId });
-	res.json(smartCards);
+	const transaction = await Transaction.find({ userId: req.user._id });
+	res.json(transaction);
 });
 
 // verify smart card number
@@ -105,7 +105,7 @@ router.post('/payTvBill', auth, async (req, res, err) => {
 	axios
 		.post(`${process.env.PAYTVBILL}`, body, config)
 		.then((response) => {
-			const smartCards = new Smartcard({
+			const transaction = new Transaction({
 				smartCard: smartCard,
 				userId: userId._id,
 				type: response.data.content.type,
@@ -117,9 +117,10 @@ router.post('/payTvBill', auth, async (req, res, err) => {
 				total_amount: response.data.content.transactions.total_amount,
 				product_name: response.data.content.product_name
 			});
-			smartCards.save();
+			transaction.save();
 			if (res.data.response_description === 'TRANSACTION SUCCESSFUL') {
 				res.status(200).json({
+					transaction,
 					msg: 'success'
 				});
 				return;
@@ -158,7 +159,7 @@ router.post('/TvSubTranx', auth, async (req, res) => {
 	axios
 		.post(`${process.env.specificTrans}`, body, config)
 		.then(async (response) => {
-			let smartCards = new Smartcard({
+			let transaction = new Transaction({
 				smartCard: smartCard,
 				userId: userId._id,
 				type: response.data.content.type,
@@ -173,7 +174,7 @@ router.post('/TvSubTranx', auth, async (req, res) => {
 
 			if (response.data.content.transactionId == response.data.content.transactionId) {
 				res.status(200).json({
-					smartCards
+					transaction
 				});
 				return;
 			} else {
