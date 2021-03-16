@@ -26,7 +26,7 @@ router.get('/paystack', async (req, res) => {
 	// 	});
 
 	// //we return the output of the transaction
-	// res.status(200).send('Payment was successfully verified');
+	res.status(200).send('Payment was successfully verified');
 });
 
 
