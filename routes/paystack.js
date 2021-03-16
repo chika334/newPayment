@@ -29,8 +29,8 @@ const auth = require('../middleware/auth');
 // });
 
 
-router.get('/flutterwave', async (req, res) => {
-	console.log(req.query.reference);
+router.post('/flutterwave', async (req, res) => {
+	console.log(req);
 })
 
 module.exports = router;
