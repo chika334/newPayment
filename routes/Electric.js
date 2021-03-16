@@ -20,7 +20,7 @@ router.get('/getElectric', auth, async (req, res) => {
 	// const userId = await User.findById(req.user._id);
 	// console.log(userId, "transactions");
 	const transaction = await Transaction.find({ walletId: req.user.walletId });
-	res.status(200).json(electric);
+	res.status(200).json(transaction);
 });
 
 router.post('/verifyNumber', auth, async (req, res, error) => {
