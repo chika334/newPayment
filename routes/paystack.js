@@ -4,8 +4,8 @@ const axios = require('axios');
 const auth = require('../middleware/auth');
 
 router.get('/paystack', async (req, res) => {
-	console.log(req);
 	const ref = req.query.reference;
+	console.log(ref);
 	let output;
 	await axios
 		.get(`https://api.paystack.co/transaction/verify/${ref}`, {
